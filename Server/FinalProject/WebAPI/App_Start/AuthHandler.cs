@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System;
 using System.Web.Script.Serialization;
 using System.Collections;
+using System.Configuration;
+
 namespace WebAPI.App_Start
 {
     public class AuthHandler: DelegatingHandler
@@ -31,8 +33,8 @@ namespace WebAPI.App_Start
                 var bearerToken = authHeaderValues.ElementAt(0);
                 var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
 
-                //var secret = ConfigurationManager.AppSettings.Get("jwtKey");
-                var secret = "secretKey";
+                var secret = ConfigurationManager.AppSettings.Get("JWT");
+               
 
                 Thread.CurrentPrincipal = ValidateToken(
                     token,

@@ -253,34 +253,34 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\ACCOUNT.cs">
-      <DependentUpon>Food.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\ACCOUNT_ROLE.cs">
-      <DependentUpon>Food.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\Food.Context.cs">
+    <Compile Include="Data\Data.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Food.Context.tt</DependentUpon>
+      <DependentUpon>Data.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Data.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Data.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Data.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\FOOD.cs">
-      <DependentUpon>Food.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Food.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Food.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Food1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Food.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\LIST_ROLE.cs">
-      <DependentUpon>Food.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\TYPEFOOD.cs">
-      <DependentUpon>Food.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -299,15 +299,15 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Data\Food.Context.tt">
+    <Content Include="Data\Data.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Food.edmx</DependentUpon>
-      <LastGenOutput>Food.Context.cs</LastGenOutput>
+      <DependentUpon>Data.edmx</DependentUpon>
+      <LastGenOutput>Data.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Data\Food.tt">
+    <Content Include="Data\Data.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Food.edmx</DependentUpon>
-      <LastGenOutput>Food1.cs</LastGenOutput>
+      <DependentUpon>Data.edmx</DependentUpon>
+      <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -338,12 +338,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Data\Food.edmx">
+    <EntityDeploy Include="Data\Data.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Food.Designer.cs</LastGenOutput>
+      <LastGenOutput>Data.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Data\Food.edmx.diagram">
-      <DependentUpon>Food.edmx</DependentUpon>
+    <Content Include="Data\Data.edmx.diagram">
+      <DependentUpon>Data.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

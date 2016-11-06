@@ -9,6 +9,7 @@ using System.Linq;
 using JWT;
 using System.Text;
 using WebAPI.Data;
+using System.Configuration;
 
 namespace WebAPI.Controllers
 {
@@ -16,7 +17,7 @@ namespace WebAPI.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private readonly FOODEntities db  = new FOODEntities();
+        private readonly FOODEntities db = new FOODEntities();
 
         [AllowAnonymous]
         [Route("signin")]
@@ -130,6 +131,9 @@ namespace WebAPI.Controllers
             var passwordSalt = CreateSalt();
             var user = new ACCOUNT
             {
+                NAME = registerDetails.Username,
+                BIRTHDATE = registerDetails.BirthDay,
+                GENDER = registerDetails.Gender,
                 SALT = passwordSalt,
                 EMAIL = registerDetails.Email,
                 PASSWORDHASH = EncryptPassword(registerDetails.Password, passwordSalt)
@@ -140,7 +144,7 @@ namespace WebAPI.Controllers
             user.ACCOUNT_ROLE.Add(new ACCOUNT_ROLE
             {
                 ACCOUNT = user,
-                LIST_ROLE = Customer_Role
+                LIST_ROLE = Customer_Role,
             });
 
             db.ACCOUNTs.Add(user);

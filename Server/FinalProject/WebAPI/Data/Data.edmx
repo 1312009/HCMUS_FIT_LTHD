@@ -10,10 +10,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
-          <Property Name="EMAIL" Type="varchar" MaxLength="20" />
-          <Property Name="PASSWORDHASH" Type="varchar" MaxLength="50" />
-          <Property Name="SALT" Type="varchar" MaxLength="50" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="30" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORDHASH" Type="varchar" MaxLength="100" />
+          <Property Name="SALT" Type="varchar" MaxLength="100" />
           <Property Name="BIRTHDATE" Type="datetime" />
           <Property Name="GENDER" Type="nvarchar" MaxLength="5" />
         </EntityType>
@@ -120,10 +120,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="EMAIL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PASSWORDHASH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SALT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORDHASH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SALT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BIRTHDATE" Type="DateTime" Precision="3" />
           <Property Name="GENDER" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ACCOUNT_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_ACCOUNT" FromRole="ACCOUNT" ToRole="ACCOUNT_ROLE" />
