@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FOODModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACCOUNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="20" />
+          <Property Name="PASSWORDHASH" Type="varchar" MaxLength="50" />
+          <Property Name="SALT" Type="varchar" MaxLength="50" />
+          <Property Name="BIRTHDATE" Type="datetime" />
+          <Property Name="GENDER" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="ACCOUNT_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDROLE" Type="int" />
+          <Property Name="IDUSER" Type="int" />
+        </EntityType>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="30" />
+          <Property Name="DECRIPTION" Type="nvarchar" MaxLength="100" />
+          <Property Name="RATING" Type="int" />
+          <Property Name="IDTYPE" Type="int" />
+          <Property Name="STATUSFOOD" Type="int" />
+          <Property Name="IMGFOOD" Type="nvarchar" MaxLength="100" />
+          <Property Name="PRICE" Type="float" />
+          <Property Name="DATESALE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LIST_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TYPEFOOD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
+          <Property Name="TIMESTART" Type="time" Precision="7" />
+          <Property Name="TIMEEND" Type="time" Precision="7" />
+        </EntityType>
+        <Association Name="FK_ACCOUNT_ROLE_ACCOUNT">
+          <End Role="ACCOUNT" Type="Self.ACCOUNT" Multiplicity="0..1" />
+          <End Role="ACCOUNT_ROLE" Type="Self.ACCOUNT_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_ROLE">
+              <PropertyRef Name="IDUSER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACCOUNT_ROLE_LIST_ROLE">
+          <End Role="LIST_ROLE" Type="Self.LIST_ROLE" Multiplicity="0..1" />
+          <End Role="ACCOUNT_ROLE" Type="Self.ACCOUNT_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LIST_ROLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_ROLE">
+              <PropertyRef Name="IDROLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOOD_TYPEFOOD">
+          <End Role="TYPEFOOD" Type="Self.TYPEFOOD" Multiplicity="0..1" />
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPEFOOD">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FOOD">
+              <PropertyRef Name="IDTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FOODModelStoreContainer">
+          <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOOD" EntityType="Self.FOOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TYPEFOOD" EntityType="Self.TYPEFOOD" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ACCOUNT_ROLE_ACCOUNT" Association="Self.FK_ACCOUNT_ROLE_ACCOUNT">
+            <End Role="ACCOUNT" EntitySet="ACCOUNT" />
+            <End Role="ACCOUNT_ROLE" EntitySet="ACCOUNT_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACCOUNT_ROLE_LIST_ROLE" Association="Self.FK_ACCOUNT_ROLE_LIST_ROLE">
+            <End Role="LIST_ROLE" EntitySet="LIST_ROLE" />
+            <End Role="ACCOUNT_ROLE" EntitySet="ACCOUNT_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOOD_TYPEFOOD" Association="Self.FK_FOOD_TYPEFOOD">
+            <End Role="TYPEFOOD" EntitySet="TYPEFOOD" />
+            <End Role="FOOD" EntitySet="FOOD" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FOODModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACCOUNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORDHASH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SALT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BIRTHDATE" Type="DateTime" Precision="3" />
+          <Property Name="GENDER" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ACCOUNT_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_ACCOUNT" FromRole="ACCOUNT" ToRole="ACCOUNT_ROLE" />
+        </EntityType>
+        <EntityType Name="ACCOUNT_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDROLE" Type="Int32" />
+          <Property Name="IDUSER" Type="Int32" />
+          <NavigationProperty Name="ACCOUNT" Relationship="Self.FK_ACCOUNT_ROLE_ACCOUNT" FromRole="ACCOUNT_ROLE" ToRole="ACCOUNT" />
+          <NavigationProperty Name="LIST_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_LIST_ROLE" FromRole="ACCOUNT_ROLE" ToRole="LIST_ROLE" />
+        </EntityType>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DECRIPTION" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RATING" Type="Int32" />
+          <Property Name="IDTYPE" Type="Int32" />
+          <Property Name="STATUSFOOD" Type="Int32" />
+          <Property Name="IMGFOOD" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PRICE" Type="Double" />
+          <Property Name="DATESALE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TYPEFOOD" Relationship="Self.FK_FOOD_TYPEFOOD" FromRole="FOOD" ToRole="TYPEFOOD" />
+        </EntityType>
+        <EntityType Name="LIST_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ACCOUNT_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_LIST_ROLE" FromRole="LIST_ROLE" ToRole="ACCOUNT_ROLE" />
+        </EntityType>
+        <EntityType Name="TYPEFOOD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TIMESTART" Type="Time" Precision="7" />
+          <Property Name="TIMEEND" Type="Time" Precision="7" />
+          <NavigationProperty Name="FOODs" Relationship="Self.FK_FOOD_TYPEFOOD" FromRole="TYPEFOOD" ToRole="FOOD" />
+        </EntityType>
+        <Association Name="FK_ACCOUNT_ROLE_ACCOUNT">
+          <End Role="ACCOUNT" Type="Self.ACCOUNT" Multiplicity="0..1" />
+          <End Role="ACCOUNT_ROLE" Type="Self.ACCOUNT_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_ROLE">
+              <PropertyRef Name="IDUSER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACCOUNT_ROLE_LIST_ROLE">
+          <End Role="LIST_ROLE" Type="Self.LIST_ROLE" Multiplicity="0..1" />
+          <End Role="ACCOUNT_ROLE" Type="Self.ACCOUNT_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LIST_ROLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_ROLE">
+              <PropertyRef Name="IDROLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOOD_TYPEFOOD">
+          <End Role="TYPEFOOD" Type="Self.TYPEFOOD" Multiplicity="0..1" />
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPEFOOD">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FOOD">
+              <PropertyRef Name="IDTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FOODEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
+          <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" />
+          <EntitySet Name="FOODs" EntityType="Self.FOOD" />
+          <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" />
+          <EntitySet Name="TYPEFOODs" EntityType="Self.TYPEFOOD" />
+          <AssociationSet Name="FK_ACCOUNT_ROLE_ACCOUNT" Association="Self.FK_ACCOUNT_ROLE_ACCOUNT">
+            <End Role="ACCOUNT" EntitySet="ACCOUNTs" />
+            <End Role="ACCOUNT_ROLE" EntitySet="ACCOUNT_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACCOUNT_ROLE_LIST_ROLE" Association="Self.FK_ACCOUNT_ROLE_LIST_ROLE">
+            <End Role="LIST_ROLE" EntitySet="LIST_ROLE" />
+            <End Role="ACCOUNT_ROLE" EntitySet="ACCOUNT_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOOD_TYPEFOOD" Association="Self.FK_FOOD_TYPEFOOD">
+            <End Role="TYPEFOOD" EntitySet="TYPEFOODs" />
+            <End Role="FOOD" EntitySet="FOODs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FOODModelStoreContainer" CdmEntityContainer="FOODEntities">
+          <EntitySetMapping Name="ACCOUNTs">
+            <EntityTypeMapping TypeName="FOODModel.ACCOUNT">
+              <MappingFragment StoreEntitySet="ACCOUNT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PASSWORDHASH" ColumnName="PASSWORDHASH" />
+                <ScalarProperty Name="SALT" ColumnName="SALT" />
+                <ScalarProperty Name="BIRTHDATE" ColumnName="BIRTHDATE" />
+                <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ACCOUNT_ROLE">
+            <EntityTypeMapping TypeName="FOODModel.ACCOUNT_ROLE">
+              <MappingFragment StoreEntitySet="ACCOUNT_ROLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDROLE" ColumnName="IDROLE" />
+                <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOODs">
+            <EntityTypeMapping TypeName="FOODModel.FOOD">
+              <MappingFragment StoreEntitySet="FOOD">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DECRIPTION" ColumnName="DECRIPTION" />
+                <ScalarProperty Name="RATING" ColumnName="RATING" />
+                <ScalarProperty Name="IDTYPE" ColumnName="IDTYPE" />
+                <ScalarProperty Name="STATUSFOOD" ColumnName="STATUSFOOD" />
+                <ScalarProperty Name="IMGFOOD" ColumnName="IMGFOOD" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="DATESALE" ColumnName="DATESALE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LIST_ROLE">
+            <EntityTypeMapping TypeName="FOODModel.LIST_ROLE">
+              <MappingFragment StoreEntitySet="LIST_ROLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TYPEFOODs">
+            <EntityTypeMapping TypeName="FOODModel.TYPEFOOD">
+              <MappingFragment StoreEntitySet="TYPEFOOD">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="TIMESTART" ColumnName="TIMESTART" />
+                <ScalarProperty Name="TIMEEND" ColumnName="TIMEEND" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
