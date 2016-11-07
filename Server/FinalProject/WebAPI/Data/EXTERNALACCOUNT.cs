@@ -14,10 +14,8 @@ namespace WebAPI.Data
     
     public partial class EXTERNALACCOUNT
     {
-        public string LOGINPROVIDER { get; set; }
-        public double PROVIDERKEY { get; set; }
         public int IDUSER { get; set; }
-    
-        public virtual ACCOUNT ACCOUNT { get; set; }
+        public string LOGINPROVIDER { get; set; }
+        public string PROVIDERKEY { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System.Linq;
 using JWT;
 using System.Text;
 using WebAPI.Data;
-using WebAPI.ViewModel;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ using WebAPI.Results;
 using System.Security.Claims;
 using Newtonsoft.Json.Linq;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
 
 namespace WebAPI.Controllers
 {
@@ -25,7 +24,7 @@ namespace WebAPI.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private readonly FOODEntities db = new FOODEntities();
+        FOODEntities db = new FOODEntities();
 
         [AllowAnonymous]
         [Route("signin")]
@@ -235,9 +234,9 @@ namespace WebAPI.Controllers
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                 return new ChallengeResult(provider, this);
             }
-            double ProviderKey = double.Parse(externalLogin.ProviderKey);
+        
 
-           EXTERNALACCOUNT user= db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY == ProviderKey & x.LOGINPROVIDER==externalLogin.LoginProvider);
+           EXTERNALACCOUNT user= db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY == externalLogin.ProviderKey & x.LOGINPROVIDER==externalLogin.LoginProvider);
            // IdentityUser user = await _repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -397,37 +396,7 @@ namespace WebAPI.Controllers
 
             return parsedToken;
         }
-        private JObject GenerateLocalAccessTokenResponse(string userName)
-        {
-
-            var tokenExpiration = TimeSpan.FromDays(1);
-
-            ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-
-            identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-            identity.AddClaim(new Claim("role", "CUSTOMER"));
-
-            var props = new AuthenticationProperties()
-            {
-                IssuedUtc = DateTime.UtcNow,
-                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
-            };
-
-            var ticket = new AuthenticationTicket(identity, props);
-
-            var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
-
-            JObject tokenResponse = new JObject(
-                                        new JProperty("userName", userName),
-                                        new JProperty("access_token", accessToken),
-                                        new JProperty("token_type", "bearer"),
-                                        new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
-                                        new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
-                                        new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
-        );
-
-            return tokenResponse;
-        }
+      
         [AllowAnonymous]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
@@ -445,8 +414,7 @@ namespace WebAPI.Controllers
             }
 
             //IdentityUser user = await _repo.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
-            double covert = double.Parse(verifiedAccessToken.user_id);
-            EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY ==covert & x.LOGINPROVIDER==model.Provider);
+            EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER==model.Provider);
 
 
             bool hasRegistered = user != null;
@@ -455,26 +423,18 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("External user is already registered");
             }
-
-            user = new EXTERNALACCOUNT();
-            user.PROVIDERKEY = covert;
-            user.LOGINPROVIDER = model.Provider;
-            try {
-                db.EXTERNALACCOUNTs.Add(user);
-                db.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-
-            }
-            ACCOUNT account = new ACCOUNT();
-            account.ID=user.IDUSER;
-            db.ACCOUNTs.Add(account);
+            EXTERNALACCOUNT external = new EXTERNALACCOUNT();
+            external.IDUSER = db.ACCOUNTs.Count();
+            external.LOGINPROVIDER = model.Provider;
+            external.PROVIDERKEY = verifiedAccessToken.user_id;
+            db.EXTERNALACCOUNTs.Add(external);
             db.SaveChanges();
-            //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
-
-            return Ok(accessTokenResponse);
+            object dbUser;
+            ACCOUNT usermain=new ACCOUNT();
+            usermain.SALT = CreateSalt();
+            //Create token
+            var token = CreateToken(usermain, out dbUser);            
+            return Ok(token);
         }
         [AllowAnonymous]
         [HttpGet]
@@ -493,8 +453,7 @@ namespace WebAPI.Controllers
                 return BadRequest("Invalid Provider or External Access Token");
             }
 
-            double covert = double.Parse(verifiedAccessToken.user_id);
-            EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY == covert & x.LOGINPROVIDER == provider);
+            EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER == provider);
 
             bool hasRegistered = user != null;
 
@@ -504,9 +463,16 @@ namespace WebAPI.Controllers
             }
             ACCOUNT temp = db.ACCOUNTs.Find(user.IDUSER);
             //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(temp.NAME);
+            object dbUser;
+           
+            ACCOUNT usermain = new ACCOUNT();
+            //Create token
+            var token = CreateToken(usermain, out dbUser);
+                     
+            var response = Request.CreateResponse(new { dbUser, token });
+            //var accessTokenResponse = GenerateLocalAccessTokenResponse(temp.NAME);
 
-            return Ok(accessTokenResponse);
+            return Ok(response);
 
         }
         protected override void Dispose(bool disposing)
