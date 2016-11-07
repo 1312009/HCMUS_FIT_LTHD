@@ -273,6 +273,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Data.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\EXTERNALACCOUNT.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\FOOD.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>

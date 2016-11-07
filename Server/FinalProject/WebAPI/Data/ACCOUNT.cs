@@ -18,6 +18,7 @@ namespace WebAPI.Data
         public ACCOUNT()
         {
             this.ACCOUNT_ROLE = new HashSet<ACCOUNT_ROLE>();
+            this.EXTERNALACCOUNTs = new HashSet<EXTERNALACCOUNT>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,7 @@ namespace WebAPI.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ACCOUNT_ROLE> ACCOUNT_ROLE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EXTERNALACCOUNT> EXTERNALACCOUNTs { get; set; }
     }
 }

@@ -4,13 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="56857c77b5fb4753a307c3dd41f92480" Name="Diagram1">
-        <EntityTypeShape EntityType="FOODModel.ACCOUNT" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOODModel.ACCOUNT_ROLE" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOODModel.FOOD" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOODModel.LIST_ROLE" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOODModel.TYPEFOOD" Width="1.5" PointX="2.75" PointY="5.5" IsExpanded="true" />
+      <Diagram DiagramId="f012641c860949dc9a5bc50a73388e75" Name="Diagram1">
+        <EntityTypeShape EntityType="FOODModel.ACCOUNT" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOODModel.ACCOUNT_ROLE" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOODModel.EXTERNALACCOUNT" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOODModel.FOOD" Width="1.5" PointX="8" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOODModel.LIST_ROLE" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOODModel.TYPEFOOD" Width="1.5" PointX="5.75" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="FOODModel.FK_ACCOUNT_ROLE_ACCOUNT" ManuallyRouted="false" />
+        <AssociationConnector Association="FOODModel.FK_EXTERNALACCOUNT_ACCOUNT" ManuallyRouted="false" />
         <AssociationConnector Association="FOODModel.FK_ACCOUNT_ROLE_LIST_ROLE" ManuallyRouted="false" />
         <AssociationConnector Association="FOODModel.FK_FOOD_TYPEFOOD" ManuallyRouted="false" />
       </Diagram>

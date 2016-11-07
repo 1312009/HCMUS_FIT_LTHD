@@ -10,10 +10,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="30" />
-          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
-          <Property Name="PASSWORDHASH" Type="varchar" MaxLength="100" />
-          <Property Name="SALT" Type="varchar" MaxLength="100" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="20" />
+          <Property Name="PASSWORDHASH" Type="varchar" MaxLength="50" />
+          <Property Name="SALT" Type="varchar" MaxLength="50" />
           <Property Name="BIRTHDATE" Type="datetime" />
           <Property Name="GENDER" Type="nvarchar" MaxLength="5" />
         </EntityType>
@@ -24,6 +24,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDROLE" Type="int" />
           <Property Name="IDUSER" Type="int" />
+        </EntityType>
+        <EntityType Name="EXTERNALACCOUNT">
+          <Key>
+            <PropertyRef Name="PROVIDERKEY" />
+            <PropertyRef Name="IDUSER" />
+          </Key>
+          <Property Name="LOGINPROVIDER" Type="char" MaxLength="20" />
+          <Property Name="PROVIDERKEY" Type="float" Nullable="false" />
+          <Property Name="IDUSER" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FOOD">
           <Key>
@@ -79,6 +88,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EXTERNALACCOUNT_ACCOUNT">
+          <End Role="ACCOUNT" Type="Self.ACCOUNT" Multiplicity="1" />
+          <End Role="EXTERNALACCOUNT" Type="Self.EXTERNALACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EXTERNALACCOUNT">
+              <PropertyRef Name="IDUSER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FOOD_TYPEFOOD">
           <End Role="TYPEFOOD" Type="Self.TYPEFOOD" Multiplicity="0..1" />
           <End Role="FOOD" Type="Self.FOOD" Multiplicity="*" />
@@ -94,6 +115,7 @@
         <EntityContainer Name="FOODModelStoreContainer">
           <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXTERNALACCOUNT" EntityType="Self.EXTERNALACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FOOD" EntityType="Self.FOOD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPEFOOD" EntityType="Self.TYPEFOOD" Schema="dbo" store:Type="Tables" />
@@ -104,6 +126,10 @@
           <AssociationSet Name="FK_ACCOUNT_ROLE_LIST_ROLE" Association="Self.FK_ACCOUNT_ROLE_LIST_ROLE">
             <End Role="LIST_ROLE" EntitySet="LIST_ROLE" />
             <End Role="ACCOUNT_ROLE" EntitySet="ACCOUNT_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXTERNALACCOUNT_ACCOUNT" Association="Self.FK_EXTERNALACCOUNT_ACCOUNT">
+            <End Role="ACCOUNT" EntitySet="ACCOUNT" />
+            <End Role="EXTERNALACCOUNT" EntitySet="EXTERNALACCOUNT" />
           </AssociationSet>
           <AssociationSet Name="FK_FOOD_TYPEFOOD" Association="Self.FK_FOOD_TYPEFOOD">
             <End Role="TYPEFOOD" EntitySet="TYPEFOOD" />
@@ -120,13 +146,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PASSWORDHASH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SALT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORDHASH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SALT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BIRTHDATE" Type="DateTime" Precision="3" />
           <Property Name="GENDER" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ACCOUNT_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_ACCOUNT" FromRole="ACCOUNT" ToRole="ACCOUNT_ROLE" />
+          <NavigationProperty Name="EXTERNALACCOUNTs" Relationship="Self.FK_EXTERNALACCOUNT_ACCOUNT" FromRole="ACCOUNT" ToRole="EXTERNALACCOUNT" />
         </EntityType>
         <EntityType Name="ACCOUNT_ROLE">
           <Key>
@@ -137,6 +164,16 @@
           <Property Name="IDUSER" Type="Int32" />
           <NavigationProperty Name="ACCOUNT" Relationship="Self.FK_ACCOUNT_ROLE_ACCOUNT" FromRole="ACCOUNT_ROLE" ToRole="ACCOUNT" />
           <NavigationProperty Name="LIST_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_LIST_ROLE" FromRole="ACCOUNT_ROLE" ToRole="LIST_ROLE" />
+        </EntityType>
+        <EntityType Name="EXTERNALACCOUNT">
+          <Key>
+            <PropertyRef Name="PROVIDERKEY" />
+            <PropertyRef Name="IDUSER" />
+          </Key>
+          <Property Name="LOGINPROVIDER" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="PROVIDERKEY" Type="Double" Nullable="false" />
+          <Property Name="IDUSER" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ACCOUNT" Relationship="Self.FK_EXTERNALACCOUNT_ACCOUNT" FromRole="EXTERNALACCOUNT" ToRole="ACCOUNT" />
         </EntityType>
         <EntityType Name="FOOD">
           <Key>
@@ -183,6 +220,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EXTERNALACCOUNT_ACCOUNT">
+          <End Role="ACCOUNT" Type="Self.ACCOUNT" Multiplicity="1" />
+          <End Role="EXTERNALACCOUNT" Type="Self.EXTERNALACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EXTERNALACCOUNT">
+              <PropertyRef Name="IDUSER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ACCOUNT_ROLE_LIST_ROLE">
           <End Role="LIST_ROLE" Type="Self.LIST_ROLE" Multiplicity="0..1" />
           <End Role="ACCOUNT_ROLE" Type="Self.ACCOUNT_ROLE" Multiplicity="*" />
@@ -210,12 +259,17 @@
         <EntityContainer Name="FOODEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" />
+          <EntitySet Name="EXTERNALACCOUNTs" EntityType="Self.EXTERNALACCOUNT" />
           <EntitySet Name="FOODs" EntityType="Self.FOOD" />
           <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" />
           <EntitySet Name="TYPEFOODs" EntityType="Self.TYPEFOOD" />
           <AssociationSet Name="FK_ACCOUNT_ROLE_ACCOUNT" Association="Self.FK_ACCOUNT_ROLE_ACCOUNT">
             <End Role="ACCOUNT" EntitySet="ACCOUNTs" />
             <End Role="ACCOUNT_ROLE" EntitySet="ACCOUNT_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXTERNALACCOUNT_ACCOUNT" Association="Self.FK_EXTERNALACCOUNT_ACCOUNT">
+            <End Role="ACCOUNT" EntitySet="ACCOUNTs" />
+            <End Role="EXTERNALACCOUNT" EntitySet="EXTERNALACCOUNTs" />
           </AssociationSet>
           <AssociationSet Name="FK_ACCOUNT_ROLE_LIST_ROLE" Association="Self.FK_ACCOUNT_ROLE_LIST_ROLE">
             <End Role="LIST_ROLE" EntitySet="LIST_ROLE" />
@@ -250,6 +304,15 @@
               <MappingFragment StoreEntitySet="ACCOUNT_ROLE">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDROLE" ColumnName="IDROLE" />
+                <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXTERNALACCOUNTs">
+            <EntityTypeMapping TypeName="FOODModel.EXTERNALACCOUNT">
+              <MappingFragment StoreEntitySet="EXTERNALACCOUNT">
+                <ScalarProperty Name="LOGINPROVIDER" ColumnName="LOGINPROVIDER" />
+                <ScalarProperty Name="PROVIDERKEY" ColumnName="PROVIDERKEY" />
                 <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
               </MappingFragment>
             </EntityTypeMapping>
