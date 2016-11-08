@@ -10,8 +10,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="30" />
-          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="40" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="80" />
           <Property Name="PASSWORDHASH" Type="varchar" MaxLength="100" />
           <Property Name="SALT" Type="varchar" MaxLength="100" />
           <Property Name="BIRTHDATE" Type="datetime" />
@@ -24,6 +24,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDROLE" Type="int" />
           <Property Name="IDUSER" Type="int" />
+        </EntityType>
+        <EntityType Name="EXTERNALACCOUNT">
+          <Key>
+            <PropertyRef Name="IDUSER" />
+            <PropertyRef Name="PROVIDERKEY" />
+          </Key>
+          <Property Name="IDUSER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LOGINPROVIDER" Type="char" MaxLength="20" />
+          <Property Name="PROVIDERKEY" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="FOOD">
           <Key>
@@ -94,6 +103,7 @@
         <EntityContainer Name="FOODModelStoreContainer">
           <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXTERNALACCOUNT" EntityType="Self.EXTERNALACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FOOD" EntityType="Self.FOOD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPEFOOD" EntityType="Self.TYPEFOOD" Schema="dbo" store:Type="Tables" />
@@ -120,8 +130,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="PASSWORDHASH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SALT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BIRTHDATE" Type="DateTime" Precision="3" />
@@ -137,6 +147,15 @@
           <Property Name="IDUSER" Type="Int32" />
           <NavigationProperty Name="ACCOUNT" Relationship="Self.FK_ACCOUNT_ROLE_ACCOUNT" FromRole="ACCOUNT_ROLE" ToRole="ACCOUNT" />
           <NavigationProperty Name="LIST_ROLE" Relationship="Self.FK_ACCOUNT_ROLE_LIST_ROLE" FromRole="ACCOUNT_ROLE" ToRole="LIST_ROLE" />
+        </EntityType>
+        <EntityType Name="EXTERNALACCOUNT">
+          <Key>
+            <PropertyRef Name="IDUSER" />
+            <PropertyRef Name="PROVIDERKEY" />
+          </Key>
+          <Property Name="IDUSER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOGINPROVIDER" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="PROVIDERKEY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="FOOD">
           <Key>
@@ -210,6 +229,7 @@
         <EntityContainer Name="FOODEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" />
+          <EntitySet Name="EXTERNALACCOUNTs" EntityType="Self.EXTERNALACCOUNT" />
           <EntitySet Name="FOODs" EntityType="Self.FOOD" />
           <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" />
           <EntitySet Name="TYPEFOODs" EntityType="Self.TYPEFOOD" />
@@ -251,6 +271,15 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDROLE" ColumnName="IDROLE" />
                 <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXTERNALACCOUNTs">
+            <EntityTypeMapping TypeName="FOODModel.EXTERNALACCOUNT">
+              <MappingFragment StoreEntitySet="EXTERNALACCOUNT">
+                <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+                <ScalarProperty Name="LOGINPROVIDER" ColumnName="LOGINPROVIDER" />
+                <ScalarProperty Name="PROVIDERKEY" ColumnName="PROVIDERKEY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -27,6 +27,7 @@ namespace WebAPI.Data
     
         public virtual DbSet<ACCOUNT> ACCOUNTs { get; set; }
         public virtual DbSet<ACCOUNT_ROLE> ACCOUNT_ROLE { get; set; }
+        public virtual DbSet<EXTERNALACCOUNT> EXTERNALACCOUNTs { get; set; }
         public virtual DbSet<FOOD> FOODs { get; set; }
         public virtual DbSet<LIST_ROLE> LIST_ROLE { get; set; }
         public virtual DbSet<TYPEFOOD> TYPEFOODs { get; set; }
