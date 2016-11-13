@@ -30,7 +30,7 @@
             <PropertyRef Name="IDUSER" />
             <PropertyRef Name="PROVIDERKEY" />
           </Key>
-          <Property Name="IDUSER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDUSER" Type="int" Nullable="false" />
           <Property Name="LOGINPROVIDER" Type="char" MaxLength="20" />
           <Property Name="PROVIDERKEY" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -153,7 +153,7 @@
             <PropertyRef Name="IDUSER" />
             <PropertyRef Name="PROVIDERKEY" />
           </Key>
-          <Property Name="IDUSER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDUSER" Type="Int32" Nullable="false" />
           <Property Name="LOGINPROVIDER" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
           <Property Name="PROVIDERKEY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
@@ -226,7 +226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FOODEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FOODEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" />
           <EntitySet Name="EXTERNALACCOUNTs" EntityType="Self.EXTERNALACCOUNT" />
@@ -251,7 +251,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FOODModelStoreContainer" CdmEntityContainer="FOODEntities">
+        <EntityContainerMapping StorageEntityContainer="FOODModelStoreContainer" CdmEntityContainer="FOODEntities1">
           <EntitySetMapping Name="ACCOUNTs">
             <EntityTypeMapping TypeName="FOODModel.ACCOUNT">
               <MappingFragment StoreEntitySet="ACCOUNT">

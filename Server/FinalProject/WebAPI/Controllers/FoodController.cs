@@ -6,17 +6,19 @@ using System.Web.Http.Description;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
-{
+{   [RoutePrefix("api/foods")]
+    [Authorize(Roles ="ADMIN")]
     public class FOODController : ApiController
     {
-        private FOODEntities db = new FOODEntities();
-
-        // GET: api/FOODs
-        public IQueryable<FOOD> GetFOODs()
-        {
-            return db.FOODs;
+        public FOODEntities1 db = new FOODEntities1();
+        [Route("")]
+        [HttpGet]
+        public List<FOOD> GetFOODs()
+        {         
+            return db.FOODs.ToList();
         }
 
         // GET: api/FOODs/5

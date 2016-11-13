@@ -13,10 +13,10 @@ namespace WebAPI.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FOODEntities : DbContext
+    public partial class FOODEntities1 : DbContext
     {
-        public FOODEntities()
-            : base("name=FOODEntities")
+        public FOODEntities1()
+            : base("name=FOODEntities1")
         {
         }
     

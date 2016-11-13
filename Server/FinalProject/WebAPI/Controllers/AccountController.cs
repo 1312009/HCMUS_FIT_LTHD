@@ -15,17 +15,58 @@ using System.Threading.Tasks;
 using WebAPI.Results;
 using System.Security.Claims;
 using Newtonsoft.Json.Linq;
-using Microsoft.Owin.Security.OAuth;
+using System.Net.Mail;
+using WebAPI.Models;
+using System.Configuration;
 using System.Data.Entity;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        FOODEntities db = new FOODEntities();
+        public FOODEntities1 db = new FOODEntities1();
+        public string CreateCode()
+        {
+            string _allowedChars = "ABCDEFGHIJKMNOPQRSTUVWXYZ0123456789";
 
+            Random randNum = new Random();
+
+            char[] chars = new char[6];
+
+            int allowedCharCount = _allowedChars.Length;
+
+            for (int i = 0; i < 6; i++)
+            {
+                chars[i] = _allowedChars[(int)((_allowedChars.Length) * randNum.NextDouble())];
+                if (chars[i] == '0' || chars[i] == '1' || chars[i] == '2' || chars[i] == '3' || chars[i] == '4'
+              || chars[i] == '5' || chars[i] == '6' || chars[i] == '7' || chars[i] == '8' || chars[i] == '9')
+                {
+                    _allowedChars = "ABCDEFGHIJKMNOPQRSTUVWXYZ";
+                }
+            }
+            return new string(chars);
+        }
+        [AllowAnonymous]
+        [Route("ForgetPassword")]
+        [HttpGet]
+        public bool Main(string id)
+        {
+            int idaccount = int.Parse(id);
+            if(db.EXTERNALACCOUNTs.FirstOrDefault(x=>x.IDUSER==idaccount)!=null)
+            {
+                return false;
+            }
+            ACCOUNT account = db.ACCOUNTs.FirstOrDefault(x => x.ID == idaccount);
+
+            MailMessage mailMessag = new MailMessage(ConfigurationManager.AppSettings.Get("Email"),account.EMAIL);
+            mailMessag.Subject = "Gửi lại mật khẩu";
+            mailMessag.Body = "Mã khẩu của bạn là: "+CreateCode();
+            SmtpClient client = new SmtpClient();
+            client.Send(mailMessag);
+            return true;
+        }
+        //LOGIN BÌNH THƯỜNG
         [AllowAnonymous]
         [Route("signin")]
         [HttpPost]
@@ -50,8 +91,9 @@ namespace WebAPI.Controllers
                     if (loginSuccess)
                     {
                         object dbUser;
-                        var token = CreateToken(existingUser, out dbUser);
+                        var token = CreateTokenLogin(existingUser, out dbUser);
                         response = Request.CreateResponse(new { dbUser, token });
+                        
                     }
                 }
             }
@@ -93,6 +135,40 @@ namespace WebAPI.Controllers
 
             return response;
         }
+        [AllowAnonymous]
+        [Route("ChangPass")]
+        [HttpPut]
+        public HttpResponseMessage Changpassword(ChangePasswordBindingModel model)
+        {
+            HttpResponseMessage response;
+            if (ModelState.IsValid)
+            {
+                var existingUser = db.ACCOUNTs.FirstOrDefault(u => u.ID==model.ID);
+
+                if (existingUser == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "User not exist.");
+                }
+
+                //Update user and save to database
+                var passwordSalt = CreateSalt();
+                existingUser.SALT = passwordSalt;
+                existingUser.PASSWORDHASH = EncryptPassword(model.NewPassword, passwordSalt);
+                db.Entry(existingUser).State = EntityState.Modified;
+                db.SaveChanges();
+                object dbUser;
+
+                //Create token
+                var token = CreateToken(existingUser, out dbUser);
+
+                response = Request.CreateResponse(new { dbUser, token });
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.BadRequest, new { success = false });
+            }
+            return response;
+        }
 
         /// <summary>
         /// Create a Jwt with user information
@@ -127,7 +203,34 @@ namespace WebAPI.Controllers
             dbUser = new { user.EMAIL, user.ID };
             return token;
         }
+        private static string CreateTokenLogin(ACCOUNT user, out object dbUser)
+        {
+            FOODEntities1 db = new FOODEntities1();
+            var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var expiry = Math.Round((DateTime.UtcNow.AddHours(2) - unixEpoch).TotalSeconds);
+            var issuedAt = Math.Round((DateTime.UtcNow - unixEpoch).TotalSeconds);
+            var notBefore = Math.Round((DateTime.UtcNow.AddMonths(6) - unixEpoch).TotalSeconds);
+            ACCOUNT_ROLE account= db.ACCOUNT_ROLE.FirstOrDefault(x => x.IDUSER == user.ID);
+            LIST_ROLE listrole = db.LIST_ROLE.FirstOrDefault(x => x.ID == account.IDROLE);
+            var payload = new Dictionary<string, object>
+            {
+                {"email", user.EMAIL},
+                {"userId", user.ID},
+                {"role", listrole.NAME  },
+                {"sub", user.ID},
+                {"nbf", notBefore},
+                {"iat", issuedAt},
+                {"exp", expiry}
+            };
 
+            //var secret = ConfigurationManager.AppSettings.Get("jwtKey");
+            const string apikey = "secretKey";
+
+            var token = JsonWebToken.Encode(payload, apikey, JwtHashAlgorithm.HS256);
+
+            dbUser = new { user.EMAIL, user.ID };
+            return token;
+        }
         /// <summary>
         /// Create a new user and saves it to the database
         /// </summary>
@@ -190,7 +293,7 @@ namespace WebAPI.Controllers
                 return Convert.ToBase64String(sha256.ComputeHash(saltedPasswordAsBytes));
             }
         }
-
+        // LOGIN FACEBOOK
         private IAuthenticationManager Authentication
         {
             get { return Request.GetOwinContext().Authentication; }
@@ -424,7 +527,7 @@ namespace WebAPI.Controllers
                 return BadRequest("External user is already registered");
             }
             EXTERNALACCOUNT external = new EXTERNALACCOUNT();
-            external.IDUSER = db.ACCOUNTs.Count();
+            external.IDUSER = db.ACCOUNTs.Count()+1;
             external.LOGINPROVIDER = model.Provider;
             external.PROVIDERKEY = verifiedAccessToken.user_id;
             db.EXTERNALACCOUNTs.Add(external);

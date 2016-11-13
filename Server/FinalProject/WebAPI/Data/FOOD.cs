@@ -9,9 +9,10 @@
 
 namespace WebAPI.Data
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class FOOD
     {
         public int ID { get; set; }
@@ -23,7 +24,7 @@ namespace WebAPI.Data
         public string IMGFOOD { get; set; }
         public Nullable<double> PRICE { get; set; }
         public Nullable<System.DateTime> DATESALE { get; set; }
-    
+        [JsonIgnore]
         public virtual TYPEFOOD TYPEFOOD { get; set; }
     }
 }
