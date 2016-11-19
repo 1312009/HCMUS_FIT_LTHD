@@ -52,8 +52,8 @@ namespace WebAPI
             //Configure Google External Login
             googleAuthOptions = new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "xxxxxx",
-                ClientSecret = "xxxxxx",
+                ClientId = ConfigurationManager.AppSettings.Get("ClientId"),
+                ClientSecret = ConfigurationManager.AppSettings.Get("ClientSecret"),
                 Provider = new GoogleAuthProvider()
             };
             app.UseGoogleAuthentication(googleAuthOptions);

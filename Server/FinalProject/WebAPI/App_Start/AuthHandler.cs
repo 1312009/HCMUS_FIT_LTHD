@@ -14,7 +14,8 @@ using System.Configuration;
 
 namespace WebAPI.App_Start
 {
-    public class AuthHandler: DelegatingHandler
+    //Kiểm tra token để xem quyền truy cập từ phía client
+    public class AuthHandler : DelegatingHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
                   CancellationToken cancellationToken)
@@ -34,7 +35,7 @@ namespace WebAPI.App_Start
                 var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
 
                 var secret = ConfigurationManager.AppSettings.Get("JWT");
-               
+
 
                 Thread.CurrentPrincipal = ValidateToken(
                     token,

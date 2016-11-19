@@ -9,15 +9,16 @@ using System.Data.Entity.Infrastructure;
 using System.Collections.Generic;
 
 namespace WebAPI.Controllers
-{   [RoutePrefix("api/foods")]
-    [Authorize(Roles ="ADMIN")]
+{
+    [RoutePrefix("api/foods")]
+    [Authorize(Roles = "CUSTOMER")]
     public class FOODController : ApiController
     {
         public FOODEntities1 db = new FOODEntities1();
         [Route("")]
         [HttpGet]
         public List<FOOD> GetFOODs()
-        {         
+        {
             return db.FOODs.ToList();
         }
 
