@@ -1,0 +1,24 @@
+{
+  "name": "food-order",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "thaison95"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/1312009/HCMUS_FIT_LTHD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "fontawesome#^4.7.0"
+  }
+}
