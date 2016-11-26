@@ -181,18 +181,21 @@ namespace WebAPI.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "User not exist.");
                 }
-              
-                //Update user and save to database
-                var passwordSalt = CreateSalt();
-                existingUser.SALT = passwordSalt;
-                existingUser.PASSWORDHASH = EncryptPassword(model.NewPassword, passwordSalt);
-                db.Entry(existingUser).State = EntityState.Modified;
-                db.SaveChanges();
+                var loginSuccess =
+                        string.Equals(EncryptPassword(model.OldPassword, existingUser.SALT),
+                            existingUser.PASSWORDHASH);
+                    if(loginSuccess)
+                    {
+                    //Update user and save to database
+                    var passwordSalt = CreateSalt();
+                    existingUser.SALT = passwordSalt;
+                    existingUser.PASSWORDHASH = EncryptPassword(model.NewPassword, passwordSalt);
+                    db.Entry(existingUser).State = EntityState.Modified;
+                    db.SaveChanges();             
+                  }
                 object dbUser;
-
                 //Create token
                 var token = CreateToken(existingUser, out dbUser);
-
                 response = Request.CreateResponse(new { dbUser, token });
             }
             else
@@ -405,9 +408,9 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Invalid Provider or External Access Token");
             }
-            var fb = new FacebookClient(model.ExternalAccessToken);
-            dynamic myInfo = fb.Get("/me?fields=name,id,gender,birthday,email");
-            EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault(x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER == model.Provider);     
+           
+            EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault
+            (x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER == model.Provider);     
             bool hasRegistered = user != null;
             var token = "";
             object dbUser;
@@ -416,6 +419,12 @@ namespace WebAPI.Controllers
                 ACCOUNT account = db.ACCOUNTs.FirstOrDefault(x => x.ID == user.IDUSER);
                 token = CreateTokenLogin(account, out dbUser);
                 return Ok(token);
+            }
+            dynamic myInfo = "";
+            if (model.Provider == "Facebook")
+            {
+                var fb = new FacebookClient(model.ExternalAccessToken);
+                myInfo = fb.Get("/me?fields=name,id,gender,birthday,email");
             }
             EXTERNALACCOUNT external = new EXTERNALACCOUNT();
             external.IDUSER = db.ACCOUNTs.Count() + 1;
@@ -493,12 +502,22 @@ namespace WebAPI.Controllers
             ACCOUNT_ROLE role = new ACCOUNT_ROLE();
             role.IDUSER = external.IDUSER;
             role.IDROLE = 2;
-            db.EXTERNALACCOUNTs.Add(external);
-            db.SaveChanges();
-            db.ACCOUNTs.Add(usermain);
-            db.SaveChanges();
-            db.ACCOUNT_ROLE.Add(role);
-            db.SaveChanges();
+            DbContextTransaction dt = db.Database.BeginTransaction();
+            try
+            {
+                db.EXTERNALACCOUNTs.Add(external);
+                db.SaveChanges();
+                db.ACCOUNTs.Add(usermain);
+                db.SaveChanges();
+                db.ACCOUNT_ROLE.Add(role);
+                db.SaveChanges();
+                dt.Commit();
+            }
+            catch (Exception ex)
+            {
+                dt.Rollback();
+                return BadRequest("Error");
+            }          
             //Create token
             token = CreateToken(usermain, out dbUser);
             return Ok(token);
