@@ -10,8 +10,8 @@ namespace WebAPI.Models
     public class ChangePasswordBindingModel
     {
         [Required]
-        [Display(Name = "ID")]
-        public int ID { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace WebAPI.ViewModel
@@ -18,8 +19,16 @@ namespace WebAPI.ViewModel
     }
     public class RegisterExternalBindingModel
     {
-        [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
+ 
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+
+        public DateTime BirthDay { get; set; }
+     
+        public string Gender { get; set; }
 
         [Required]
         public string Provider { get; set; }
