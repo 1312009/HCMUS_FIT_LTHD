@@ -1,0 +1,39 @@
+
+table{
+	width: 100%;
+	height: 90%;
+}
+
+
+.content_input{
+	max-width: 100%;
+	width: 400px;
+	padding-left: 40%;
+	height:200px;
+}
+
+
+
+select{ 
+	float:left;
+	width:100%;
+	height: 100%;
+	min-height: 30px;
+	margin: auto;
+}
+
+
+.form_input input{
+	height: 25px;
+	width: 100%;
+    float: left;
+}
+
+
+#img_preview{
+
+	height: 100px;
+	width: 100px;
+	float: right;
+
+}

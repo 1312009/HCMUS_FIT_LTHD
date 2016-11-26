@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Food Order</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="bower_components/requirejs/require.js" data-main="js/main.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery-migrate/jquery-migrate.js"></script>
+    <script src="bower_components/jQuery.equalHeights/jquery.equalheights.js"></script>
+    <script src="bower_components/ui-to-top/js/jquery.ui.totop.js"></script>
+    <script src="bower_components/jquery.easing/js/jquery.easing.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".block1").mouseover(function() {
+                $(this).addClass("blur");
+            });
+            $(".block1").mouseout(function() {
+                $(this).removeClass("blur");
+            });
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        })
+    </script>
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+
+
 </head>
-<body>
-Hello!
+<body class="page1">
+<my-header></my-header>
+<div class="content"></div>
+<my-footer></my-footer>
 </body>
 </html>

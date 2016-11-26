@@ -1,0 +1,12 @@
+.sample-show-hide {
+  padding: 10px;  
+  background: white;
+}
+
+.sample-show-hide {
+  transition: all linear 0.5s;
+}
+
+.sample-show-hide.ng-hide {
+  opacity: 0;
+}

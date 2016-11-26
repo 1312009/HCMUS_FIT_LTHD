@@ -1,0 +1,68 @@
+@CHARSET "UTF-8";
+
+
+
+html{
+  height: 100%;
+}
+body {
+  	height: 100%;
+	background: #f5f5f5;
+}
+
+.login_container{
+	background: #ffffff;
+	min-height: 100%;
+	height: 100%;
+	
+    display: flex;
+    margin: 50px;
+}
+
+.login-form{
+	
+	height: 100%;
+	width: 100%;
+    margin: 400px;
+    margin-top: 100px;
+}
+
+
+h1{
+	
+    text-align: center;
+}
+
+input[type='text']{
+	width: 100%;
+	height: 32px;
+	margin: 3px;
+    text-align: left;
+    
+}
+input::-webkit-input-placeholder {
+    font-size: 15px;
+}
+#cbRemember{
+	float: left;
+    text-align: left;
+}
+
+
+ form {
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+}
+#btnSignUp{
+	margin-left: 45px;
+	float: right;
+}
+#btnSignIn{
+	background: #46d200;
+	width: 100px;
+	height: 44px;
+    border: none;
+	float: right;
+	margin-top:5px;
+}
