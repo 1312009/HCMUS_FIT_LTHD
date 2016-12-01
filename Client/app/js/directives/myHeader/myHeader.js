@@ -23,8 +23,8 @@ define(function (require) {
                     );
                 });
             },
-
-            templateUrl: 'js/directives/myHeader/header.html'
+            templateUrl: 'js/directives/myHeader/header.html',
+            controller: "socialLogin"
         };
     });
 

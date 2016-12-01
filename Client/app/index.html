@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--<meta name="google-signin-client_id" content="872912626455-bvlpomh5rsnccib0of29qjfj9o4u59ir.apps.googleusercontent.com">-->
     <title>Food Order</title>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script type="text/javascript" src="bower_components/requirejs/require.js" data-main="js/main.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.ico">
     <link rel="shortcut icon" href="images/favicon.ico" />
@@ -15,6 +15,7 @@
     <script src="bower_components/jQuery.equalHeights/jquery.equalheights.js"></script>
     <script src="bower_components/ui-to-top/js/jquery.ui.totop.js"></script>
     <script src="bower_components/jquery.easing/js/jquery.easing.js"></script>
+    <script type="text/javascript" src="bower_components/requirejs/require.js" data-main="js/main.js"></script>
     <script>
         $(document).ready(function(){
             $(".block1").mouseover(function() {
@@ -29,11 +30,14 @@
 
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
 
+    <google-plus-signin clientid="620125449078"></google-plus-signin>
 
 </head>
 <body class="page1">
 <my-header></my-header>
-<div class="content"></div>
+<div class="content">
+    <ui-view></ui-view>
+</div>
 <my-footer></my-footer>
 </body>
 </html>
