@@ -10,8 +10,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="40" />
-          <Property Name="EMAIL" Type="varchar" MaxLength="80" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="100" />
           <Property Name="PASSWORDHASH" Type="varchar" MaxLength="100" />
           <Property Name="SALT" Type="varchar" MaxLength="100" />
           <Property Name="BIRTHDATE" Type="datetime" />
@@ -30,7 +30,7 @@
             <PropertyRef Name="IDUSER" />
             <PropertyRef Name="PROVIDERKEY" />
           </Key>
-          <Property Name="IDUSER" Type="int" Nullable="false" />
+          <Property Name="IDUSER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LOGINPROVIDER" Type="char" MaxLength="20" />
           <Property Name="PROVIDERKEY" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -130,8 +130,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="EMAIL" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PASSWORDHASH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SALT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BIRTHDATE" Type="DateTime" Precision="3" />
@@ -153,7 +153,7 @@
             <PropertyRef Name="IDUSER" />
             <PropertyRef Name="PROVIDERKEY" />
           </Key>
-          <Property Name="IDUSER" Type="Int32" Nullable="false" />
+          <Property Name="IDUSER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LOGINPROVIDER" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
           <Property Name="PROVIDERKEY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
@@ -226,7 +226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FOODEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FOODEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" />
           <EntitySet Name="EXTERNALACCOUNTs" EntityType="Self.EXTERNALACCOUNT" />
@@ -251,7 +251,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FOODModelStoreContainer" CdmEntityContainer="FOODEntities1">
+        <EntityContainerMapping StorageEntityContainer="FOODModelStoreContainer" CdmEntityContainer="FOODEntities">
           <EntitySetMapping Name="ACCOUNTs">
             <EntityTypeMapping TypeName="FOODModel.ACCOUNT">
               <MappingFragment StoreEntitySet="ACCOUNT">

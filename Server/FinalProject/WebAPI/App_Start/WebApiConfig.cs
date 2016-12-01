@@ -7,7 +7,7 @@ using System.Web.Http.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using WebAPI.App_Start;
-
+using System.Net.Http.Formatting;
 
 namespace WebAPI
 {
@@ -33,6 +33,8 @@ namespace WebAPI
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             config.MessageHandlers.Add(new AuthHandler());
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

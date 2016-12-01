@@ -14,12 +14,18 @@ namespace WebAPI.Controllers
     [Authorize(Roles = "CUSTOMER")]
     public class FOODController : ApiController
     {
-        public FOODEntities1 db = new FOODEntities1();
+        public FOODEntities db = new FOODEntities();
+        /// <summary>
+        /// Lấy danh sách thức ăn
+        /// </summary>
+        /// <returns></returns>
         [Route("")]
         [HttpGet]
         public List<FOOD> GetFOODs()
         {
-            return db.FOODs.ToList();
+            var foods = from a in db.FOODs
+                        select a;
+            return foods.ToList();
         }
 
         // GET: api/FOODs/5
