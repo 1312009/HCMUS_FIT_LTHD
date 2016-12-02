@@ -7,8 +7,7 @@ define(function (require) {
 
     var social = angular.module('socialLogin', []);
 
-    social.controller('socialLogin', function ($scope, $rootScope) {
-
+    social.controller('socialLogin', function ($scope, store) {
 
         $scope.loginGG = function() {
                  	var client_id="579123578196-mq4oubjc4pl2jn2n4pkbrra46gt3994a.apps.googleusercontent.com";

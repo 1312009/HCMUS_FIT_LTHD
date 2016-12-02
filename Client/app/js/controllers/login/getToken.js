@@ -7,7 +7,7 @@ define(function (require) {
 
     var getTK = angular.module('getToken', []);
 
-    getTK.controller('getToken', function ($location, $rootScope, $state) {
+    getTK.controller('getToken', function ($location, store, $state) {
 
         var hash = $location.path().substr(1);
 
@@ -19,11 +19,10 @@ define(function (require) {
             var key    = param[0];
             var value  = param[1];
             params[key] = value;
-            $rootScope.accesstoken=params;
+            store.set('accessToken', params);
         }
-        $rootScope.flag = true;
+
         $state.go("home");
-        console.log($rootScope.accesstoken);
     });
 
     return getTK;

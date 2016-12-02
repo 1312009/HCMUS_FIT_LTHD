@@ -13,7 +13,8 @@ define(function (require) {
         'ngAnimate',
         'directives',
         'controllers',
-        'ui.router'
+        'ui.router',
+        'angular-storage'
     ]);
 
     app.init = function () {
@@ -51,6 +52,14 @@ define(function (require) {
                 });
 
         }]);
+
+    // app.config([
+    //     'store',
+    //     function (store) {
+    //         store.set(flag, false);
+    //         console.log("loaded");
+    //     }
+    // ]);
 
     return app;
 });
