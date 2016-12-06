@@ -178,7 +178,7 @@ BEGIN
 	ORDER BY COUNT(*) DESC
 END
 GO
-create proc usp_TimKiemMonAn5 @TT nvarchar(50),@row int,@count int
+create proc usp_TimKiemMonAn @TT nvarchar(50),@row int,@count int
 as
 begin
 	SET FMTONLY OFF
@@ -186,7 +186,7 @@ begin
 	begin
 		set @row=0
 		select @count = count(*)
-		from(select distinct ID from FOOD where NAME like N'%'+@TT+'%') a
+		from(select distinct ID from FOOD where  dbo.fChuyenCoDauThanhKhongDau(NAME) like N'%'+@TT+'%') a
 	end
 	CREATE TABLE #TMP (MAMON INT, SOLUONGTHICH INT)
 	INSERT INTO #TMP
@@ -204,7 +204,7 @@ begin
 		#TMP.SOLUONGTHICH AS SoLuongThich
 	from FOOD F, #TMP,
 				(select ID,row_number() over(order by count(*) desc) as row
-				from FOOD where NAME like N'%'+@TT+'%'
+				from FOOD where  dbo.fChuyenCoDauThanhKhongDau(NAME) like N'%'+@TT+'%'
 				group by ID) m1
 	where m1.row>@row and m1.row <=@count+@row and F.ID= m1.ID
 	AND #TMP.MAMON = F.ID
@@ -212,7 +212,6 @@ begin
 	--DROP TABLE #TMP
 end
 go 
-exec usp_TimKiemMonAn5 'hÀU',null,null
 CREATE FUNCTION [dbo].[fChuyenCoDauThanhKhongDau](@inputVar NVARCHAR(MAX) )
 RETURNS NVARCHAR(MAX)
 AS
