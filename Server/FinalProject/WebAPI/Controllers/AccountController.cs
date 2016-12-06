@@ -139,7 +139,8 @@ namespace WebAPI.Controllers
             {
                 string convert = model.Email.ToString();
                 var existingUser = db.ACCOUNTs.FirstOrDefault(u => u.EMAIL ==convert);
-                if (existingUser != null)
+               
+                if (existingUser != null )
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "User already exist.");
                 }
@@ -237,7 +238,7 @@ namespace WebAPI.Controllers
 
             var token = JsonWebToken.Encode(payload, apikey, JwtHashAlgorithm.HS256);
 
-            dbUser = new { user.EMAIL, user.ID };
+            dbUser = new { user.NAME,user.IMAGEACC};
             return token;
         }
 
@@ -370,8 +371,9 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
+        public async Task<HttpResponseMessage> RegisterExternal(RegisterExternalBindingModel model)
         {
+            HttpResponseMessage response;
             string name = "";
             string birthday = "";
             string gender = "";
@@ -381,12 +383,12 @@ namespace WebAPI.Controllers
             var token = "";
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
             var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
             if (verifiedAccessToken == null)
             {
-                return BadRequest("Invalid Provider or External Access Token");
+                response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid Provider or External Access Token"); 
             }
             EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault
             (x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER == model.Provider);
@@ -396,7 +398,8 @@ namespace WebAPI.Controllers
             {
                 ACCOUNT account1 = db.ACCOUNTs.FirstOrDefault(x => x.ID == user.IDUSER);
                 token = CreateTokenLogin(account1, out dbUser);
-                return Ok(token);
+                response = Request.CreateResponse(new { dbUser, token });
+                return response;
             }
             if (model.Provider == "Facebook")
             {
@@ -548,7 +551,7 @@ namespace WebAPI.Controllers
                 catch (Exception ex)
                 {
                     dt.Rollback();
-                    return BadRequest("Error");
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error");
                 }
             }
            
@@ -556,8 +559,8 @@ namespace WebAPI.Controllers
             usermain = new ACCOUNT();
             usermain = db.ACCOUNTs.FirstOrDefault(x => x.EMAIL == email);
             token = CreateTokenLogin(usermain, out dbUser);
-           
-            return Ok(token);
+            response = Request.CreateResponse(new { dbUser, token });
+            return response;
         }
         [AllowAnonymous]
         [HttpGet]
