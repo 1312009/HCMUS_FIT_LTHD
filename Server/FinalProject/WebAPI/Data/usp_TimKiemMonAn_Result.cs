@@ -10,11 +10,17 @@
 namespace WebAPI.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LIST_ROLE
+    public partial class usp_TimKiemMonAn_Result
     {
         public int ID { get; set; }
         public string NAME { get; set; }
+        public string DECRIPTION { get; set; }
+        public Nullable<System.DateTime> DATESALE { get; set; }
+        public Nullable<int> IDTYPE { get; set; }
+        public string IMGFOOD { get; set; }
+        public Nullable<double> PRICE { get; set; }
+        public Nullable<int> STATUSFOOD { get; set; }
+        public Nullable<int> SoLuongThich { get; set; }
     }
 }

@@ -12,9 +12,12 @@ namespace WebAPI.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class LIST_ROLE
+    public partial class COMMENT
     {
         public int ID { get; set; }
-        public string NAME { get; set; }
+        public int IDUSER { get; set; }
+        public int IDFOOD { get; set; }
+        public string CONTENT { get; set; }
+        public Nullable<System.DateTime> DATE { get; set; }
     }
 }

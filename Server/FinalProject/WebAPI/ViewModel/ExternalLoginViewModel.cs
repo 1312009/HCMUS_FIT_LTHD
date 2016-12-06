@@ -4,14 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.ViewModel
 {
-    public class ExternalLoginViewModel
-    {
-        public string Name { get; set; }
-
-        public string Url { get; set; }
-
-        public string State { get; set; }
-    }
     public class ParsedExternalAccessToken
     {
         public string user_id { get; set; }
@@ -19,21 +11,18 @@ namespace WebAPI.ViewModel
     }
     public class RegisterExternalBindingModel
     {
-        public string Username { get; set; }
- 
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-
-        public DateTime BirthDay { get; set; }
-     
-        public string Gender { get; set; }
-
         [Required]
         public string Provider { get; set; }
 
         [Required]
         public string ExternalAccessToken { get; set; }
+    }
+    public class GoogleUserOutputData
+    {
+        public string name { get; set; }
+        public string gender { get; set; }
+        public string birthday { get; set; }
+        public string email { get; set; }
+        public string picture { get; set; }
     }
 }

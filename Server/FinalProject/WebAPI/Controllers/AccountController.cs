@@ -8,24 +8,24 @@ using System.Net;
 using System.Linq;
 using JWT;
 using System.Text;
-using WebAPI.Data;
-using Microsoft.Owin.Security;
-using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
-using WebAPI.Results;
-using System.Security.Claims;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Newtonsoft.Json.Linq;
 using System.Net.Mail;
 using WebAPI.Models;
+using WebAPI.Data;
 using System.Configuration;
 using System.Data.Entity;
 using Facebook;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        public string imgnormal = "http://res.cloudinary.com/dqabuxewl/image/upload/v1480963523/default-user-icon-profile_ex6q2v.png";
         public FOODEntities db = new FOODEntities();
         /// <summary>
         /// Tạo mới password khi người dùng quên mật khẩu.
@@ -150,7 +150,7 @@ namespace WebAPI.Controllers
                 object dbUser;
 
                 //Create token
-                var token = CreateToken(user, out dbUser);
+                var token = CreateTokenLogin(user, out dbUser);
 
                 response = Request.CreateResponse(new { dbUser, token });
             }
@@ -195,7 +195,7 @@ namespace WebAPI.Controllers
                   }
                 object dbUser;
                 //Create token
-                var token = CreateToken(existingUser, out dbUser);
+                var token = CreateTokenLogin(existingUser, out dbUser);
                 response = Request.CreateResponse(new { dbUser, token });
             }
             else
@@ -205,40 +205,7 @@ namespace WebAPI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Tạo jwt cho client
-        /// </summary>
-        /// <param name="user">Thông tin cơ bản người dùng</param>
-        /// <param name="dbUser">Thông báo User trong Response</param>
-        /// <returns></returns>
-        private static string CreateToken(ACCOUNT user, out object dbUser)
-        {
-            var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var expiry = Math.Round((DateTime.UtcNow.AddHours(2) - unixEpoch).TotalSeconds);
-            var issuedAt = Math.Round((DateTime.UtcNow - unixEpoch).TotalSeconds);
-            var notBefore = Math.Round((DateTime.UtcNow.AddMonths(6) - unixEpoch).TotalSeconds);
-
-
-            var payload = new Dictionary<string, object>
-            {
-                {"email", user.EMAIL},
-                {"userId", user.ID},
-                {"role", "CUSTOMER"  },
-                {"sub", user.ID},
-                {"nbf", notBefore},
-                {"iat", issuedAt},
-                {"exp", expiry}
-            };
-
-            //var secret = ConfigurationManager.AppSettings.Get("jwtKey");
-            const string apikey = "secretKey";
-
-            var token = JsonWebToken.Encode(payload, apikey, JwtHashAlgorithm.HS256);
-
-            dbUser = new { user.EMAIL, user.ID };
-            return token;
-        }
-
+        
         /// <summary>
         /// Tạo token cho người dùng đăng nhập facebook, google...
         /// </summary>
@@ -288,20 +255,28 @@ namespace WebAPI.Controllers
                 GENDER = registerDetails.Gender,
                 SALT = passwordSalt,
                 EMAIL = registerDetails.Email,
-                PASSWORDHASH = EncryptPassword(registerDetails.Password, passwordSalt)
+                PASSWORDHASH = EncryptPassword(registerDetails.Password, passwordSalt),
+                IMAGEACC = imgnormal
             };
 
-            var Customer_Role = db.LIST_ROLE.FirstOrDefault(d => d.NAME == "CUSTOMER");
-
-            user.ACCOUNT_ROLE.Add(new ACCOUNT_ROLE
+            
+            DbContextTransaction dt = db.Database.BeginTransaction();
+            try
             {
-                ACCOUNT = user,
-                LIST_ROLE = Customer_Role,
-            });
-
-            db.ACCOUNTs.Add(user);
-            db.SaveChanges();
-
+                db.ACCOUNTs.Add(user);
+                db.SaveChanges();
+                ACCOUNT_ROLE role = new ACCOUNT_ROLE();
+                role.IDROLE = 2;
+                role.IDUSER = user.ID;
+                db.ACCOUNT_ROLE.Add(role);
+                db.SaveChanges();
+                dt.Commit();
+            }
+            catch (Exception ex)
+            {
+                dt.Rollback();
+            }
+           
             return user;
         }
 
@@ -397,129 +372,191 @@ namespace WebAPI.Controllers
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
-
+            string name = "";
+            string birthday = "";
+            string gender = "";
+            string email = "";
+            string picture = "";
+            dynamic myInfo = "";
+            var token = "";
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
             if (verifiedAccessToken == null)
             {
                 return BadRequest("Invalid Provider or External Access Token");
             }
-           
             EXTERNALACCOUNT user = db.EXTERNALACCOUNTs.FirstOrDefault
-            (x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER == model.Provider);     
+            (x => x.PROVIDERKEY == verifiedAccessToken.user_id & x.LOGINPROVIDER == model.Provider);
             bool hasRegistered = user != null;
-            var token = "";
             object dbUser;
             if (hasRegistered)
             {
-                ACCOUNT account = db.ACCOUNTs.FirstOrDefault(x => x.ID == user.IDUSER);
-                token = CreateTokenLogin(account, out dbUser);
+                ACCOUNT account1 = db.ACCOUNTs.FirstOrDefault(x => x.ID == user.IDUSER);
+                token = CreateTokenLogin(account1, out dbUser);
                 return Ok(token);
             }
-            dynamic myInfo = "";
             if (model.Provider == "Facebook")
             {
                 var fb = new FacebookClient(model.ExternalAccessToken);
-                myInfo = fb.Get("/me?fields=name,id,gender,birthday,email");
-            }
-            EXTERNALACCOUNT external = new EXTERNALACCOUNT();
-            external.IDUSER = db.ACCOUNTs.Count() + 1;
-            external.LOGINPROVIDER = model.Provider;
-            external.PROVIDERKEY = verifiedAccessToken.user_id;
-       
-            ACCOUNT usermain = new ACCOUNT();
-            usermain.SALT = CreateSalt();
-            string name = "";
-            string birthday = "";
-            string gender = "";
-            string email = "";
-            try
-            {
-                name = myInfo["name"];
-                
-            }
-            catch(Exception ex)
-            {
-
-            }
-            try
-            {
-                birthday = myInfo["birthday"];
-               
-            }
-            catch(Exception ex)
-            {
-
-            }
-            try
-            {
-                gender = myInfo["gender"];
-                gender=gender.ToUpper();
-              
-            }
-            catch(Exception ex)
-            {
-
-            }
-            try
-            {
-                email = myInfo["email"];
-            }
-            catch(Exception ex)
-            {
-
-            }
-            if (!string.IsNullOrEmpty(birthday))
-            {
-                DateTime convert = Convert.ToDateTime(birthday);
-                usermain.BIRTHDATE = convert;
-            }
-            if(!string.IsNullOrEmpty(email))
-            {
-                usermain.EMAIL = email;
-            }
-            if(!string.IsNullOrEmpty(name))
-            {
-                usermain.NAME = name;
-            }
-            if(!string.IsNullOrEmpty(gender))
-            {
-                if(gender=="MALE")
+                myInfo = fb.Get("/me?fields=name,id,gender,birthday,email,picture");
+                if (myInfo["email"] != "")
                 {
-                    usermain.GENDER = "NAM";
+                    email = myInfo["email"];
+                }
+                if ((myInfo["name"] != ""))
+                {
+                    name = myInfo["name"];
+                }
+                try
+                {
+                    birthday = myInfo["birthday"];
+                }
+                catch (Exception ex)
+                { }
+                try
+                {
+                    gender = myInfo["gender"];
+                    gender = gender.ToUpper();
+                }
+                catch (Exception ex)
+                { }
+                try
+                { picture = picture = String.Format("https://graph.facebook.com/{0}/picture?width=200&height=200", verifiedAccessToken.user_id);
+                }
+                catch(Exception ex)
+                { }
+            }
+
+            if (model.Provider == "Google")
+            {
+                HttpClient client = new HttpClient();
+                var urlProfile = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + model.ExternalAccessToken;
+                client.CancelPendingRequests();
+                HttpResponseMessage output = await client.GetAsync(urlProfile);
+                if (output.IsSuccessStatusCode)
+                {
+                    string outputData = await output.Content.ReadAsStringAsync();
+                    GoogleUserOutputData serStatus = JsonConvert.DeserializeObject<GoogleUserOutputData>(outputData);
+
+                    if (serStatus != null)
+                    {
+                        if (!string.IsNullOrEmpty(serStatus.email))
+                        {
+                            email = serStatus.email;
+                        }
+                        if (!string.IsNullOrEmpty(serStatus.name))
+                        {
+                            name = serStatus.name;
+                        }
+                        if (!string.IsNullOrEmpty(serStatus.birthday))
+                        {
+                            birthday = serStatus.birthday;
+                        }
+                        if (!string.IsNullOrEmpty(serStatus.gender))
+                        {
+                            gender = serStatus.gender;
+                            gender = gender.ToUpper();
+                        }
+                        if(!string.IsNullOrEmpty(serStatus.picture))
+                        {
+                            picture = serStatus.picture;
+                        }
+                    }
+                }
+            }
+
+            EXTERNALACCOUNT external = new EXTERNALACCOUNT();
+            ACCOUNT usermain = new ACCOUNT();
+            ACCOUNT acc = new ACCOUNT();
+            acc = db.ACCOUNTs.FirstOrDefault(x => x.EMAIL == email);
+            if (acc != null)
+            {
+                external.PROVIDERKEY = verifiedAccessToken.user_id;
+                external.IDUSER = acc.ID;
+                external.LOGINPROVIDER = model.Provider;
+                db.EXTERNALACCOUNTs.Add(external);
+                db.SaveChanges();
+            }
+            else
+            {
+                external.PROVIDERKEY = verifiedAccessToken.user_id;
+                external.IDUSER = db.ACCOUNTs.Count() + 1;
+                external.LOGINPROVIDER = model.Provider;
+                if (!string.IsNullOrEmpty(birthday))
+                {
+                    DateTime convert = Convert.ToDateTime(birthday);
+                    usermain.BIRTHDATE = convert;
+                }
+
+                if (!string.IsNullOrEmpty(email))
+                {
+                    usermain.EMAIL = email;
+                }
+                if (!string.IsNullOrEmpty(name))
+                {
+                    usermain.NAME = name;
+                }
+                if (!string.IsNullOrEmpty(gender))
+                {
+                    if (gender == "MALE")
+                    {
+                        usermain.GENDER = "NAM";
+                    }
+                    else
+                    {
+                        usermain.GENDER = "NỮ";
+                    }
+
+                }
+                usermain.ID = external.IDUSER;
+                ACCOUNT_ROLE role = new ACCOUNT_ROLE();
+                role.IDUSER = external.IDUSER;
+                role.IDROLE = 2;
+                if (!string.IsNullOrEmpty(picture))
+                {
+                    Account account = new Account("dqabuxewl", "198449299438919", "SRASj3YoFcfLsetrHFNNwGVF4qQ");
+                    CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(picture)
+                    };
+
+                    var uploadResult = cloudinary.Upload(uploadParams);
+                    usermain.IMAGEACC = uploadResult.Uri.OriginalString;
+
+
                 }
                 else
                 {
-                    usermain.GENDER = "NỮ";
+                    usermain.IMAGEACC = imgnormal;
                 }
-                
+                DbContextTransaction dt = db.Database.BeginTransaction();
+                try
+                {
+                    db.EXTERNALACCOUNTs.Add(external);
+                    db.SaveChanges();
+                    db.ACCOUNTs.Add(usermain);
+                    db.SaveChanges();
+                    db.ACCOUNT_ROLE.Add(role);
+                    db.SaveChanges();
+                    dt.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dt.Rollback();
+                    return BadRequest("Error");
+                }
             }
-            usermain.ID = external.IDUSER;
-            ACCOUNT_ROLE role = new ACCOUNT_ROLE();
-            role.IDUSER = external.IDUSER;
-            role.IDROLE = 2;
-            DbContextTransaction dt = db.Database.BeginTransaction();
-            try
-            {
-                db.EXTERNALACCOUNTs.Add(external);
-                db.SaveChanges();
-                db.ACCOUNTs.Add(usermain);
-                db.SaveChanges();
-                db.ACCOUNT_ROLE.Add(role);
-                db.SaveChanges();
-                dt.Commit();
-            }
-            catch (Exception ex)
-            {
-                dt.Rollback();
-                return BadRequest("Error");
-            }          
+           
             //Create token
-            token = CreateToken(usermain, out dbUser);
+            usermain = new ACCOUNT();
+            usermain = db.ACCOUNTs.FirstOrDefault(x => x.EMAIL == email);
+            token = CreateTokenLogin(usermain, out dbUser);
+           
             return Ok(token);
         }
         [AllowAnonymous]

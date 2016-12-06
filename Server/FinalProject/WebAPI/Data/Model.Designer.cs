@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Win7-64 SP1\Documents\HCMUS_FIT_LTHD\Server\FinalProject\WebAPI\Data\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\GIT\LTHD\Server\FinalProject\WebAPI\Data\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

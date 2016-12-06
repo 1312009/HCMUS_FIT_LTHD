@@ -14,18 +14,9 @@ namespace WebAPI.Data
     
     public partial class TYPEFOOD
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TYPEFOOD()
-        {
-            this.FOODs = new HashSet<FOOD>();
-        }
-    
         public int ID { get; set; }
         public string NAME { get; set; }
         public Nullable<System.TimeSpan> TIMESTART { get; set; }
         public Nullable<System.TimeSpan> TIMEEND { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FOOD> FOODs { get; set; }
     }
 }

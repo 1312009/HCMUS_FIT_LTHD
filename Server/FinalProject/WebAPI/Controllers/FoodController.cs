@@ -1,17 +1,16 @@
 ﻿using System.Linq;
 using System.Net;
-using WebAPI.Data;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Collections.Generic;
-
+using WebAPI.Data;
 namespace WebAPI.Controllers
 {
     [RoutePrefix("api/foods")]
-    [Authorize(Roles = "CUSTOMER")]
+    //[Authorize(Roles = "CUSTOMER")]
     public class FOODController : ApiController
     {
         public FOODEntities db = new FOODEntities();
@@ -19,7 +18,7 @@ namespace WebAPI.Controllers
         /// Lấy danh sách thức ăn
         /// </summary>
         /// <returns></returns>
-        [Route("")]
+        [Route("GetAllFoods")]
         [HttpGet]
         public List<FOOD> GetFOODs()
         {
@@ -27,86 +26,44 @@ namespace WebAPI.Controllers
                         select a;
             return foods.ToList();
         }
-
-        // GET: api/FOODs/5
-        [ResponseType(typeof(FOOD))]
-        public async Task<IHttpActionResult> GetFOOD(int id)
+        [Route("GetFood")]
+        [HttpGet]
+        public FOOD GetFood(string id)
         {
-            FOOD FOOD = await db.FOODs.FindAsync(id);
-            if (FOOD == null)
+            int convert = -1;
+            if(!string.IsNullOrEmpty(id))
             {
-                return NotFound();
+                convert = int.Parse(id);
             }
-
-            return Ok(FOOD);
+            return db.FOODs.Find(convert);
         }
-
-        // PUT: api/FOODs/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutFOOD(int id, FOOD FOOD)
+        [Route("TopLike")]
+        [HttpGet]
+        public IEnumerable<usp_TopMonAnThich_Result> GetTopLike()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != FOOD.ID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(FOOD).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FOODExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return db.usp_TopMonAnThich();
         }
-
-        // POST: api/FOODs
-        [ResponseType(typeof(FOOD))]
-        public async Task<IHttpActionResult> PostFOOD(FOOD FOOD)
+        [Route("FindFood")]
+        [HttpGet]
+        public IEnumerable<usp_TimKiemMonAn_Result> FindFood(string name,string row,string count)
         {
-            if (!ModelState.IsValid)
+            int convertrow =-1,convertcount=-1;
+
+            if(!string.IsNullOrEmpty(row))
             {
-                return BadRequest(ModelState);
+                convertrow = int.Parse(row);
             }
-
-            db.FOODs.Add(FOOD);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = FOOD.ID }, FOOD);
-        }
-
-        // DELETE: api/FOODs/5
-        [ResponseType(typeof(FOOD))]
-        public async Task<IHttpActionResult> DeleteFOOD(int id)
-        {
-            FOOD FOOD = await db.FOODs.FindAsync(id);
-            if (FOOD == null)
+            if (!string.IsNullOrEmpty(count))
             {
-                return NotFound();
+                convertrow = int.Parse(count);
             }
-
-            db.FOODs.Remove(FOOD);
-            await db.SaveChangesAsync();
-
-            return Ok(FOOD);
+            if(!string.IsNullOrEmpty(row)&& !string.IsNullOrEmpty(count))
+            {
+                return db.usp_TimKiemMonAn(name, convertrow, convertcount);
+            }
+            return db.usp_TimKiemMonAn(name,null,null);
         }
-
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)

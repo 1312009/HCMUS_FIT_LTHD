@@ -14,21 +14,13 @@ namespace WebAPI.Data
     
     public partial class ACCOUNT
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ACCOUNT()
-        {
-            this.ACCOUNT_ROLE = new HashSet<ACCOUNT_ROLE>();
-        }
-    
         public int ID { get; set; }
         public string NAME { get; set; }
         public string EMAIL { get; set; }
         public string PASSWORDHASH { get; set; }
         public string SALT { get; set; }
         public Nullable<System.DateTime> BIRTHDATE { get; set; }
+        public string IMAGEACC { get; set; }
         public string GENDER { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ACCOUNT_ROLE> ACCOUNT_ROLE { get; set; }
     }
 }

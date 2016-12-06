@@ -17,8 +17,5 @@ namespace WebAPI.Data
         public int ID { get; set; }
         public Nullable<int> IDROLE { get; set; }
         public Nullable<int> IDUSER { get; set; }
-    
-        public virtual ACCOUNT ACCOUNT { get; set; }
-        public virtual LIST_ROLE LIST_ROLE { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace WebAPI.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class FOODEntities : DbContext
     {
@@ -27,9 +29,33 @@ namespace WebAPI.Data
     
         public virtual DbSet<ACCOUNT> ACCOUNTs { get; set; }
         public virtual DbSet<ACCOUNT_ROLE> ACCOUNT_ROLE { get; set; }
+        public virtual DbSet<COMMENT> COMMENTs { get; set; }
         public virtual DbSet<EXTERNALACCOUNT> EXTERNALACCOUNTs { get; set; }
         public virtual DbSet<FOOD> FOODs { get; set; }
+        public virtual DbSet<LIKEUSER> LIKEUSERs { get; set; }
         public virtual DbSet<LIST_ROLE> LIST_ROLE { get; set; }
         public virtual DbSet<TYPEFOOD> TYPEFOODs { get; set; }
+    
+        public virtual ObjectResult<usp_TimKiemMonAn_Result> usp_TimKiemMonAn(string tT, Nullable<int> row, Nullable<int> count)
+        {
+            var tTParameter = tT != null ?
+                new ObjectParameter("TT", tT) :
+                new ObjectParameter("TT", typeof(string));
+    
+            var rowParameter = row.HasValue ?
+                new ObjectParameter("row", row) :
+                new ObjectParameter("row", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_TimKiemMonAn_Result>("usp_TimKiemMonAn", tTParameter, rowParameter, countParameter);
+        }
+    
+        public virtual ObjectResult<usp_TopMonAnThich_Result> usp_TopMonAnThich()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_TopMonAnThich_Result>("usp_TopMonAnThich");
+        }
     }
 }
