@@ -1,0 +1,71 @@
+<a href="index_menu.html" class="block1" >
+    <img src="images/blur_img1.jpg" alt="">
+    <span class="price"><span>Điểm tâm</span><span>06h - 09h</span><strong></strong></span>
+</a>
+
+<a href="index_menu.html" class="block1" >
+    <img src="images/blur_img2.jpg" alt="">
+    <span class="price"><span>Cơm trưa</span><span>10h - 13h</span><strong></strong></span>
+</a>
+
+<a href="index_menu.html" class="block1" >
+    <img src="images/blur_img3.jpg" alt="">
+    <span class="price"><span>Cơm tối</span>
+                    <span>16h - 21h</span><strong></strong></span>
+</a>
+
+<div class="container_12">
+    <div class="grid_12">
+        <h3>Món ăn yêu thích</h3>
+    </div>
+
+    <div class="grid_3" >
+        <div class="box maxheight">
+            <img src="{{listFood[0].imgfood}}" alt="" height="189" width="189">
+            <div class="title" id="ft">{{listFood[0].name}}</div>
+            <p id="detail">
+                {{listFood[0].decription | lengthstring}}
+            </p>
+            <a style="margin-bottom: -20px; color: red;">{{listFood[0].price}}đ</a>
+            <br>
+            <a href="" ng-click="success(0)">Đặt món</a>
+        </div>
+    </div>
+
+    <div class="grid_3">
+        <div class="box maxheight">
+            <img src="{{listFood[1].imgfood}}" alt="" height="189" width="189">
+            <div class="title" id="ft">{{listFood[1].name}}</div>
+            <p id="detail">
+                {{listFood[1].decription | lengthstring}}
+            </p>
+            <a style="margin-bottom: -20px; color: red;">{{listFood[1].price}}đ</a>
+            <br>
+            <a href="" ng-click="success(0)">Đặt món</a>
+        </div>
+    </div>
+    <div class="grid_3">
+        <div class="box maxheight">
+            <img src="{{listFood[2].imgfood}}" alt="" height="189" width="189">
+            <div class="title" id="ft">{{listFood[2].name}}</div>
+            <p id="detail">
+                {{listFood[2].decription | lengthstring}}
+            </p>
+            <a style="margin-bottom: -20px; color: red;">{{listFood[2].price}}đ</a>
+            <br>
+            <a href="" ng-click="success(0)">Đặt món</a>
+        </div>
+    </div>
+    <div class="grid_3">
+        <div class="box maxheight">
+            <img src="{{listFood[0].imgfood}}" alt="" height="189" width="189">
+            <div class="title" id="ft">{{listFood[0].name}}</div>
+            <p id="detail">
+                {{listFood[0].decription | lengthstring}}
+            </p>
+            <a style="margin-bottom: -20px; color: red;">{{listFood[0].price}}đ</a>
+            <br>
+            <a href="" ng-click="success(0)">Đặt món</a>
+        </div>
+    </div>
+</div>

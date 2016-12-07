@@ -50,13 +50,17 @@ define(function (require) {
 
         }]);
 
-    // app.config([
-    //     'store',
-    //     function (store) {
-    //         store.set(flag, false);
-    //         console.log("loaded");
-    //     }
-    // ]);
+    app.filter('lengthstring', function () {
+        return function (item) {
+            if(item.length > 82)
+            {
+                return item.substr(0, 82) + '...'
+            }else{
+                return item
+            }
+
+        };
+    });
 
     return app;
 });
