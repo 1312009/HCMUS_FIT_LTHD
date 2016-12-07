@@ -9,9 +9,9 @@ define(function (require) {
 
     home.controller('home', function ($http, $scope, store, sharedData) {
 
-        $scope.msg = "Đăng nhập thành công";
-        $scope.jwt = store.get('jwt');
-        $scope.accessToken = "access_token=" + store.get('accessToken').access_token;
+        // $scope.msg = "Đăng nhập thành công";
+        // $scope.jwt = store.get('jwt');
+        // $scope.accessToken = "access_token=" + store.get('accessToken').access_token;
 
         if(angular.isDefined(store.get('social'))) {
             if(store.get('social') == "google") {
@@ -22,7 +22,7 @@ define(function (require) {
                 $scope.msg = "Đăng nhập facebook thành công";
         }
 
-        callApi('Secured', 'http://localhost:59219/api/foods');
+        callApi('Secured', 'http://localhost:59219/api/foods/GetAllFoods');
 
 
         function callApi(type, url) {
@@ -31,11 +31,9 @@ define(function (require) {
             $http({
                 url: url,
                 method: 'GET',
-                headers: {
-                    Authorization: $scope.jwt
-                }
-            }).then(function(quote) {
-                $scope.listFood = quote.data;
+            }).then(function(response) {
+                sharedData.listFood = response.data;
+                $scope.listFood = response.data;
                 console.log($scope.listFood);
             }, function(error) {
                 console.log(error);
