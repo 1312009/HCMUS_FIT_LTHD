@@ -19,7 +19,7 @@ define(function (require) {
                 store.set('jwt', response.data.token);
                 console.log(response);
 
-                $state.go("home");
+                $state.go("/");
             }, function errorCallback(response) {
                 console.log(response);
                 console.log($scope.user);

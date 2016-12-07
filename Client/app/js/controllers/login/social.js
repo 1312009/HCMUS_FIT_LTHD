@@ -9,23 +9,25 @@ define(function (require) {
 
     social.controller('socialLogin', function ($scope, store) {
 
-        $scope.loginGG = function() {
-                 	var client_id="579123578196-mq4oubjc4pl2jn2n4pkbrra46gt3994a.apps.googleusercontent.com";
-                 	var scope="email";
-                 	var redirect_uri="http://localhost:3000";
-                 	var response_type="token";
-                 	var url="https://accounts.google.com/o/oauth2/auth?scope="+scope+"&client_id="+client_id+"&redirect_uri="+redirect_uri+
-                     	"&response_type="+response_type;
-                 	window.location.replace(url);
-                 };
+        $scope.loginGG = function () {
+            var client_id = "872912626455-bvlpomh5rsnccib0of29qjfj9o4u59ir.apps.googleusercontent.com";
+            var scope = "email";
+            var redirect_uri = "http://localhost:3000";
+            var response_type = "token";
+            var url = "https://accounts.google.com/o/oauth2/auth?scope=" + scope + "&client_id=" + client_id + "&redirect_uri=" + redirect_uri +
+                "&response_type=" + response_type;
+            store.set('social','google');
+            window.location.replace(url);
+        };
 
-        $scope.loginFB = function() {
-            var client_id="243001122781125";
-            var scope="email";
-            var redirect_uri="http://localhost:3000";
-            var response_type="token";
-            var url="https://www.facebook.com/dialog/oauth?scope="+scope+"&client_id="+client_id+"&redirect_uri="+redirect_uri+
-                "&response_type="+response_type;
+        $scope.loginFB = function () {
+            var client_id = "243001122781125";
+            var scope = "email";
+            var redirect_uri = "http://localhost:3000";
+            var response_type = "token";
+            var url = "https://www.facebook.com/dialog/oauth?scope=" + scope + "&client_id=" + client_id + "&redirect_uri=" + redirect_uri +
+                "&response_type=" + response_type;
+            store.set('social','facebook');
             window.location.replace(url);
         };
     });

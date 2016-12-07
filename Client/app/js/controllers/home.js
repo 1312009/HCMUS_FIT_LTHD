@@ -7,12 +7,21 @@ define(function (require) {
 
     var home = angular.module('home', []);
 
-    home.controller('home', function ($http, $scope, store) {
+    home.controller('home', function ($http, $scope, store, sharedData) {
 
         $scope.msg = "Đăng nhập thành công";
+        $scope.jwt = store.get('jwt');
         $scope.accessToken = "access_token=" + store.get('accessToken').access_token;
 
-        $scope.jwt = store.get('jwt');
+        if(angular.isDefined(store.get('social'))) {
+            if(store.get('social') == "google") {
+                $scope.msg = "Đăng nhập google thành công";
+
+            }
+            else
+                $scope.msg = "Đăng nhập facebook thành công";
+        }
+
         callApi('Secured', 'http://localhost:59219/api/foods');
 
 
@@ -28,11 +37,12 @@ define(function (require) {
             }).then(function(quote) {
                 $scope.listFood = quote.data;
                 console.log($scope.listFood);
-                console.log($scope.listFood[0].name);
             }, function(error) {
                 console.log(error);
             });
         }
+
+
     });
 
     return home;

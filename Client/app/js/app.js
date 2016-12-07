@@ -8,11 +8,13 @@ define(function (require) {
 
     var directives = require('./directives/main');
     var controllers = require('./controllers/main');
+    var services = require('./services/main');
 
     var app = angular.module('foodOrder', [
         'ngAnimate',
         'directives',
         'controllers',
+        'services',
         'ui.router',
         'angular-storage'
     ]);
@@ -30,13 +32,8 @@ define(function (require) {
 
             $stateProvider
 
-                // .state("/", {
-                //     url: '/',
-                //     templateUrl: "/partials/bookForm.html",
-                //     controller: ""
-                // })
-                .state("home", {
-                    url: '/home',
+                .state("/", {
+                    url: '/',
                     templateUrl: "/pages/home.html",
                     controller: "home"
                 })

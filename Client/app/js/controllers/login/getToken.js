@@ -22,7 +22,7 @@ define(function (require) {
             store.set('accessToken', params);
         }
 
-        $state.go("home");
+        $state.go("/");
     });
 
     return getTK;
