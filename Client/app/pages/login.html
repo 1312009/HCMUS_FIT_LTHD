@@ -1,5 +1,10 @@
-<form>
-    <input type="text" ng-model="user.Email" placeholder="Enter You email" ><br>
-    <input type="text" ng-model="user.Password" placeholder="Enter Password" ><br>
-    <button id="btnSignIn" ng-click="login()">Sign in</button>
-</form>
+<div class="content" style="background-color: #eee; padding-top: 50px; padding-bottom: 50px;">
+    <div class="form">
+        <form class="login-form">
+            <input type="text" placeholder="username" ng-model="user.Email"/>
+            <input type="password" placeholder="password" ng-model="user.Password"/>
+            <button ng-click="login()">login</button>
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+        </form>
+    </div>
+</div>

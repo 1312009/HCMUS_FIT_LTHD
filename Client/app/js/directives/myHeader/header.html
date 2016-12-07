@@ -1,13 +1,13 @@
 <div class="container_12 my-header" >
 <div class="grid_12">
     <div ng-hide="isLogin" class="socials">
-        <a ng-click="authenticate('facebook')"></a>
+        <a ui-sref="login"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
         <a ng-click="loginFB()"></a>
         <a ng-click="loginGG()"></a>
     </div>
     <div ng-show="isLogin" class="socials" >
         <div>
-            <div style="float: midle;">
+            <div ng-click="reset()" style="float: midle; cursor: pointer">
                 <img ng-src={{user.imageacc}} height="50" width="50">
             </div>
             <p>Chào mừng {{ user.name }} đến với Cơm Văn Phòng</p>

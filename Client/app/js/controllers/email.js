@@ -10,22 +10,19 @@ define(function (require) {
     email.controller('emailLogin', function ($http, store, $scope, $state) {
         $scope.user = {};
         $scope.login = function () {
-            store.remove('social');
-            store.remove('dataSocial');
-            store.remove('accessToken');
-            // $http({
-            //     method: 'POST',
-            //     url: 'http://localhost:59219/api/Account/signin',
-            //     data: $scope.user
-            // }).then(function successCallback(response) {
-            //     store.set('jwt', response.data.token);
-            //     console.log(response);
-            //
-            //     $state.go("/");
-            // }, function errorCallback(response) {
-            //     console.log(response);
-            //     console.log($scope.user);
-            // });
+            $http({
+                method: 'POST',
+                url: 'http://localhost:59219/api/Account/signin',
+                data: $scope.user
+            }).then(function successCallback(response) {
+                store.set('jwt', response.data);
+                console.log(response);
+                window.location.replace('http://localhost:3000');
+                // $state.go("/");
+            }, function errorCallback(response) {
+                console.log(response);
+                console.loged($scope.user);
+            });
         };
     });
 

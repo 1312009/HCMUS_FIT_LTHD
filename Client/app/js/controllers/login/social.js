@@ -40,7 +40,13 @@ define(function (require) {
                 loginSocial('Google');
             else
                 loginSocial('Facebook');
-            $scope.user = store.get('dataSocial').dbUser;
+            // $scope.user = store.get('dataSocial').dbUser;
+        }
+
+        if(angular.isDefined(store.get('jwt')) && store.get('jwt') != null)
+        {
+            $scope.isLogin = true;
+            $scope.user = store.get('jwt').dbUser;
         }
 
         function loginSocial(provider) {
@@ -50,10 +56,18 @@ define(function (require) {
                 data: {Provider: provider, ExternalAccessToken: store.get('accessToken').access_token}
             }).then(function(response) {
                 store.set('dataSocial',response.data);
+                $scope.user = response.data.dbUser;
                 console.log(response);
             }, function(error) {
                 console.log(error);
             });
+        }
+
+        $scope.reset = function () {
+            store.remove('social');
+            store.remove('dataSocial');
+            store.remove('accessToken');
+            store.remove('jwt');
         }
     });
 
