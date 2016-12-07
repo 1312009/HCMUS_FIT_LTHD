@@ -33,7 +33,7 @@ define(function (require) {
         };
 
         $scope.isLogin = false;
-        if(angular.isDefined(store.get('social')) && store.get('social') != null)
+        if(angular.isDefined(store.get('social')) && store.get('social') !== null)
         {
             $scope.isLogin = true;
             if(store.get('social') == "google")
@@ -43,7 +43,7 @@ define(function (require) {
             // $scope.user = store.get('dataSocial').dbUser;
         }
 
-        if(angular.isDefined(store.get('jwt')) && store.get('jwt') != null)
+        if(angular.isDefined(store.get('jwt')) && store.get('jwt') !== null)
         {
             $scope.isLogin = true;
             $scope.user = store.get('jwt').dbUser;
@@ -68,7 +68,7 @@ define(function (require) {
             store.remove('dataSocial');
             store.remove('accessToken');
             store.remove('jwt');
-        }
+        };
     });
 
     return social;

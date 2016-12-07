@@ -54,9 +54,9 @@ define(function (require) {
         return function (item) {
             if(item.length > 82)
             {
-                return item.substr(0, 82) + '...'
+                return item.substr(0, 82) + '...';
             }else{
-                return item
+                return item;
             }
 
         };
