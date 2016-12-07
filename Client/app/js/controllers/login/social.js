@@ -30,6 +30,15 @@ define(function (require) {
             store.set('social','facebook');
             window.location.replace(url);
         };
+
+        $scope.isLogin = angular.isDefined(store.get('social'));
+        if($scope.isLogin)
+        {
+            $scope.user = store.get('dataSocial').dbUser;
+            console.log($scope.user);
+        }
+
+
     });
 
     return social;

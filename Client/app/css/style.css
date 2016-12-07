@@ -248,8 +248,12 @@ h1 a img {
 .socials {
     margin-bottom: 27px;
     text-align: center;
-    font-size: 0;
+    font-size: 12px;
     line-height: 0;
+}
+
+.socials p{
+    margin-top:15px;
 }
 
 .socials a {

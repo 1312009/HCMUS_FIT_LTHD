@@ -16,7 +16,7 @@ define(function (require) {
         if(angular.isDefined(store.get('social'))) {
             if(store.get('social') == "google") {
                 $scope.msg = "Đăng nhập google thành công";
-
+                loginSocial('Google');
             }
             else
                 $scope.msg = "Đăng nhập facebook thành công";
@@ -42,7 +42,18 @@ define(function (require) {
             });
         }
 
-
+        function loginSocial(provider) {
+            $http({
+                url: 'http://localhost:59219/api/Account/RegisterExternal',
+                method: 'POST',
+                data: {Provider: provider, ExternalAccessToken: store.get('accessToken').access_token}
+            }).then(function(response) {
+                store.set('dataSocial',response.data);
+                console.log(response);
+            }, function(error) {
+                console.log(error);
+            });
+        }
     });
 
     return home;

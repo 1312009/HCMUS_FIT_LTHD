@@ -1,20 +1,20 @@
 <div class="container_12 my-header" >
 <div class="grid_12">
-    <div class="socials">
+    <div ng-hide="isLogin" class="socials">
         <a ng-click="authenticate('facebook')"></a>
         <a ng-click="loginFB()"></a>
         <a ng-click="loginGG()"></a>
     </div>
-    <!--<div ng-show="authData" class="socials" >-->
-        <!--<div>-->
-            <!--<p>Chào mừng {{ myAccount.displayName }} đến với Cơm Văn Phòng</p>-->
-            <!--<div style="float: midle;">-->
-                <!--<img ng-src={{myAccount.profileImageURL}} height="50" width="50">-->
-            <!--</div>-->
+    <div ng-show="isLogin" class="socials" >
+        <div>
+            <div style="float: midle;">
+                <img ng-src={{user.imageacc}} height="50" width="50">
+            </div>
+            <p>Chào mừng {{ user.name }} đến với Cơm Văn Phòng</p>
             <!--<div style="clear: right;">-->
                 <!--<button ng-click="logout()">Logout</button></div>-->
-        <!--</div>-->
-    <!--</div>-->
+        </div>
+    </div>
     <h1><a href="index.html"><img src="images/logo.png" alt="Boo House"></a> </h1>
     <div class="menu_block">
 
