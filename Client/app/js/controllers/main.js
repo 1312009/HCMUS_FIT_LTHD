@@ -7,10 +7,11 @@ define(function (require) {
 
     var social = require('./login/social');
     var home = require('./home');
+    var menu = require('./menu');
     var email = require('./email');
     var getToken = require('./login/getToken');
 
-    var controllers = angular.module('controllers',['socialLogin','home','emailLogin','getToken']);
+    var controllers = angular.module('controllers',['socialLogin','home','emailLogin','getToken','menu']);
 
     return controllers;
 });

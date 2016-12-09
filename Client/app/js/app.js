@@ -42,6 +42,11 @@ define(function (require) {
                     templateUrl: "/pages/login.html",
                     controller: "emailLogin"
                 })
+                .state("menu", {
+                    url: '/menu',
+                    templateUrl: "/pages/menu.html",
+                    controller: "menu"
+                })
                 .state('get_token', {
                     url: '/access_token=:accessToken',
                     template: '',

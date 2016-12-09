@@ -1,0 +1,105 @@
+<div class="content">
+    <div class="container_12">
+        <div class="grid_12">
+            <h3 class="head2">Thực đơn hôm nay</h3>
+
+        </div>
+
+        <div class="tabs tb gallery">
+            <div class="div-nav  ">
+                <div class="grid_12">
+                    <ul class="nav">
+                        <li ng-class="breakFirst"><a ng-click="breakFirstClick()" class="">Điểm tâm</a></li>
+
+                        <li ng-class="lunch"><a ng-click="lunchClick()">Cơm trưa</a></li>
+
+                        <li ng-class="dinner"><a ng-click="dinnerClick()">Cơm tối</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="div-tabs">
+                <div ng-if="idtype == 1" id="tab-1" class="tab-content gallery1">
+                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{statusfood: 1, idtype: 1}">
+                        <a href="" class="gal" ng-click="success(listFood.indexOf(foodItem))"><img src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" height="187" width="187"><span></span></a>
+                        <div class="check-element sample-show-hide" ng-show="toggle">
+                            {{foodItem.decription}}
+                        </div>
+                        <div class="col2"><span class="col3" ><a href="" ng-click="toggle = !toggle">{{foodItem.name}} </a></span> {{foodItem.price}}đ</div>
+                    </div>
+
+                </div>
+                <div ng-if="idtype == 2" id="tab-2" class="tab-content gallery2">
+
+                    <div class="clear"></div>
+                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{statusfood: 1, idtype: 2}">
+                        <a href="" class="gal" ng-click="success(listFood.indexOf(foodItem))"><img src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" height="187" width="187"><span></span></a>
+                        <div class="check-element sample-show-hide" ng-show="toggle">
+                            {{foodItem.decription}}
+                        </div>
+                        <div class="col2"><span class="col3" ><a href="" ng-click="toggle = !toggle">{{foodItem.name}} </a></span> {{foodItem.price}}đ</div>
+                    </div>
+
+                </div>
+                <div ng-if="idtype == 3" id="tab-3" class="tab-content gallery3">
+                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{statusfood: 1, idtype: 3}">
+                        <a href="" class="gal" ng-click="success(listFood.indexOf(foodItem))"><img src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" height="187" width="187"><span></span></a>
+                        <div class="check-element sample-show-hide" ng-show="toggle">
+                            {{foodItem.decription}}
+                        </div>
+                        <div class="col2"><span class="col3" ><a href="" ng-click="toggle = !toggle">{{foodItem.name}} </a></span> {{foodItem.price}}đ</div>
+                    </div>
+
+
+                </div>
+                <!--<div  id="tab-4" class="tab-content gallery4">-->
+
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big2.jpg" class="gal"><img src="images/page3_img2.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Phasellus erat </a></span> $ 21.99</div>-->
+                    <!--</div>-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big3.jpg" class="gal"><img src="images/page3_img3.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Kneras facilisis </a></span> $ 23.90</div>-->
+                    <!--</div>-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big4.jpg" class="gal"><img src="images/page3_img4.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Dert facilis</a></span> $ 25.30</div>-->
+                    <!--</div>-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big5.jpg" class="gal"><img src="images/page3_img5.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Destro fetolis </a></span> $ 10.99</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<div  id="tab-5" class="tab-content gallery5">-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big1.jpg" class="gal"><img src="images/page3_img1.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Cras facilisis</a></span> $ 19.99</div>-->
+                    <!--</div>-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big2.jpg" class="gal"><img src="images/page3_img2.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Phasellus erat </a></span> $ 21.99</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big5.jpg" class="gal"><img src="images/page3_img5.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Destro fetolis </a></span> $ 10.99</div>-->
+                    <!--</div>-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big6.jpg" class="gal"><img src="images/page3_img6.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Holi erat </a></span> $ 20.99</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div  id="tab-6" class="tab-content gallery6">-->
+                    <!--<div class="grid_3">-->
+                        <!--<a href="images/big1.jpg" class="gal"><img src="images/page3_img1.jpg" alt=""><span></span></a>-->
+                        <!--<div class="col2"><span class="col3"><a href="#">Cras facilisis</a></span> $ 19.99</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+            </div>
+        </div>
+    </div>
+</div>

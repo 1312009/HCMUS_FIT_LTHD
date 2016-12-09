@@ -480,6 +480,7 @@ a.col1:hover, .col1>a:hover {
     margin: 0 11px;
     display: inline-block;
     font: 18px/20px 'Open Sans', sans-serif;
+    cursor: pointer;
 }
 
 .nav li.selected {
