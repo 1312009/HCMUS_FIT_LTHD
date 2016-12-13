@@ -10,7 +10,6 @@ using WebAPI.Data;
 namespace WebAPI.Controllers
 {
     [RoutePrefix("api/foods")]
-    //[Authorize(Roles = "CUSTOMER")]
     public class FOODController : ApiController
     {
         public FOODEntities db = new FOODEntities();
@@ -43,27 +42,8 @@ namespace WebAPI.Controllers
         {
             return db.usp_TopMonAnThich();
         }
-        [Route("FindFood")]
-        [HttpGet]
-        public IEnumerable<usp_TimKiemMonAn_Result> FindFood(string name,string row,string count)
-        {
-            int convertrow =-1,convertcount=-1;
+      
 
-            if(!string.IsNullOrEmpty(row))
-            {
-                convertrow = int.Parse(row);
-            }
-            if (!string.IsNullOrEmpty(count))
-            {
-                convertrow = int.Parse(count);
-            }
-            if(!string.IsNullOrEmpty(row)&& !string.IsNullOrEmpty(count))
-            {
-                return db.usp_TimKiemMonAn(name, convertrow, convertcount);
-            }
-            return db.usp_TimKiemMonAn(name,null,null);
-        }
-       
         protected override void Dispose(bool disposing)
         {
             if (disposing)

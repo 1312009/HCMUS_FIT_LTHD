@@ -26,9 +26,5 @@ namespace WebAPI.ViewModel
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        [Required]
-        public DateTime BirthDay { get; set; }
-        [Required]
-        public string Gender { get; set; }
     }
 }

@@ -12,10 +12,12 @@ namespace WebAPI.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class LIKEUSER
+    public partial class FOODORDER
     {
         public int ID { get; set; }
         public int IDUSER { get; set; }
         public int IDFOOD { get; set; }
+        public Nullable<int> STATUSODER { get; set; }
+        public Nullable<int> NUMBER { get; set; }
     }
 }

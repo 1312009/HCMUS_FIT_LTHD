@@ -238,7 +238,7 @@ namespace WebAPI.Controllers
 
             var token = JsonWebToken.Encode(payload, apikey, JwtHashAlgorithm.HS256);
 
-            dbUser = new { user.NAME,user.IMAGEACC};
+            dbUser = new { user.ID,user.NAME,user.IMAGEACC};
             return token;
         }
 
@@ -252,8 +252,6 @@ namespace WebAPI.Controllers
             var user = new ACCOUNT
             {
                 NAME = registerDetails.Username,
-                BIRTHDATE = registerDetails.BirthDay,
-                GENDER = registerDetails.Gender,
                 SALT = passwordSalt,
                 EMAIL = registerDetails.Email,
                 PASSWORDHASH = EncryptPassword(registerDetails.Password, passwordSalt),
@@ -414,19 +412,6 @@ namespace WebAPI.Controllers
                     name = myInfo["name"];
                 }
                 try
-                {
-                    birthday = myInfo["birthday"];
-                }
-                catch (Exception ex)
-                { }
-                try
-                {
-                    gender = myInfo["gender"];
-                    gender = gender.ToUpper();
-                }
-                catch (Exception ex)
-                { }
-                try
                 { picture = picture = String.Format("https://graph.facebook.com/{0}/picture?width=200&height=200", verifiedAccessToken.user_id);
                 }
                 catch(Exception ex)
@@ -454,15 +439,6 @@ namespace WebAPI.Controllers
                         {
                             name = serStatus.name;
                         }
-                        if (!string.IsNullOrEmpty(serStatus.birthday))
-                        {
-                            birthday = serStatus.birthday;
-                        }
-                        if (!string.IsNullOrEmpty(serStatus.gender))
-                        {
-                            gender = serStatus.gender;
-                            gender = gender.ToUpper();
-                        }
                         if(!string.IsNullOrEmpty(serStatus.picture))
                         {
                             picture = serStatus.picture;
@@ -488,12 +464,6 @@ namespace WebAPI.Controllers
                 external.PROVIDERKEY = verifiedAccessToken.user_id;
                 external.IDUSER = db.ACCOUNTs.Count() + 1;
                 external.LOGINPROVIDER = model.Provider;
-                if (!string.IsNullOrEmpty(birthday))
-                {
-                    DateTime convert = Convert.ToDateTime(birthday);
-                    usermain.BIRTHDATE = convert;
-                }
-
                 if (!string.IsNullOrEmpty(email))
                 {
                     usermain.EMAIL = email;
@@ -501,18 +471,6 @@ namespace WebAPI.Controllers
                 if (!string.IsNullOrEmpty(name))
                 {
                     usermain.NAME = name;
-                }
-                if (!string.IsNullOrEmpty(gender))
-                {
-                    if (gender == "MALE")
-                    {
-                        usermain.GENDER = "NAM";
-                    }
-                    else
-                    {
-                        usermain.GENDER = "NỮ";
-                    }
-
                 }
                 usermain.ID = external.IDUSER;
                 ACCOUNT_ROLE role = new ACCOUNT_ROLE();

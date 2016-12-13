@@ -19,8 +19,6 @@ namespace WebAPI.Data
         public string EMAIL { get; set; }
         public string PASSWORDHASH { get; set; }
         public string SALT { get; set; }
-        public Nullable<System.DateTime> BIRTHDATE { get; set; }
         public string IMAGEACC { get; set; }
-        public string GENDER { get; set; }
     }
 }

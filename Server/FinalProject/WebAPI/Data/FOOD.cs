@@ -18,9 +18,9 @@ namespace WebAPI.Data
         public string NAME { get; set; }
         public string DECRIPTION { get; set; }
         public Nullable<int> IDTYPE { get; set; }
-        public Nullable<int> STATUSFOOD { get; set; }
+        public Nullable<int> NUMBER { get; set; }
         public string IMGFOOD { get; set; }
         public Nullable<double> PRICE { get; set; }
-        public Nullable<System.DateTime> DATESALE { get; set; }
+        public Nullable<int> ISSALE { get; set; }
     }
 }

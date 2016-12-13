@@ -11,7 +11,7 @@ namespace WebAPI.Data
 {
     using System;
     
-    public partial class usp_TopMonAnThich_Result
+    public partial class usp_LoaiMonAn_Result
     {
         public int ID { get; set; }
         public string NAME { get; set; }
@@ -21,6 +21,5 @@ namespace WebAPI.Data
         public string IMGFOOD { get; set; }
         public Nullable<double> PRICE { get; set; }
         public Nullable<int> NUMBER { get; set; }
-        public Nullable<int> COUNT { get; set; }
     }
 }

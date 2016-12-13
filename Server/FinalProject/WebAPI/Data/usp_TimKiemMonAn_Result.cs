@@ -16,11 +16,11 @@ namespace WebAPI.Data
         public int ID { get; set; }
         public string NAME { get; set; }
         public string DECRIPTION { get; set; }
-        public Nullable<System.DateTime> DATESALE { get; set; }
+        public Nullable<int> ISSALE { get; set; }
         public Nullable<int> IDTYPE { get; set; }
         public string IMGFOOD { get; set; }
         public Nullable<double> PRICE { get; set; }
-        public Nullable<int> STATUSFOOD { get; set; }
-        public Nullable<int> SoLuongThich { get; set; }
+        public Nullable<int> NUMBER { get; set; }
+        public Nullable<int> SOLUONGDATHANG { get; set; }
     }
 }

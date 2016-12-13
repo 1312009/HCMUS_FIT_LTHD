@@ -14,9 +14,7 @@
           <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
           <Property Name="PASSWORDHASH" Type="nvarchar" MaxLength="200" />
           <Property Name="SALT" Type="nvarchar" MaxLength="200" />
-          <Property Name="BIRTHDATE" Type="datetime" />
           <Property Name="IMAGEACC" Type="nvarchar" MaxLength="100" />
-          <Property Name="GENDER" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="ACCOUNT_ROLE">
           <Key>
@@ -53,18 +51,20 @@
           <Property Name="NAME" Type="nvarchar" MaxLength="100" />
           <Property Name="DECRIPTION" Type="nvarchar" MaxLength="500" />
           <Property Name="IDTYPE" Type="int" />
-          <Property Name="STATUSFOOD" Type="int" />
+          <Property Name="NUMBER" Type="int" />
           <Property Name="IMGFOOD" Type="nvarchar" MaxLength="200" />
           <Property Name="PRICE" Type="float" />
-          <Property Name="DATESALE" Type="datetime" />
+          <Property Name="ISSALE" Type="int" />
         </EntityType>
-        <EntityType Name="LIKEUSER">
+        <EntityType Name="FOODORDER">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDUSER" Type="int" Nullable="false" />
           <Property Name="IDFOOD" Type="int" Nullable="false" />
+          <Property Name="STATUSODER" Type="int" />
+          <Property Name="NUMBER" Type="int" />
         </EntityType>
         <EntityType Name="LIST_ROLE">
           <Key>
@@ -85,19 +85,34 @@
         <Function Name="fChuyenCoDauThanhKhongDau" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="inputVar" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="usp_LoaiMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TYPE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="decription" Type="nvarchar" Mode="In" />
+          <Parameter Name="issale" Type="int" Mode="In" />
+          <Parameter Name="idtype" Type="int" Mode="In" />
+          <Parameter Name="img" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="float" Mode="In" />
+          <Parameter Name="NUMBER" Type="int" Mode="In" />
+        </Function>
         <Function Name="usp_TimKiemMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TT" Type="nvarchar" Mode="In" />
           <Parameter Name="row" Type="int" Mode="In" />
           <Parameter Name="count" Type="int" Mode="In" />
         </Function>
         <Function Name="usp_TopMonAnThich" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_XoaMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="FOODModelStoreContainer">
           <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACCOUNT_ROLE" EntityType="Self.ACCOUNT_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMENT" EntityType="Self.COMMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EXTERNALACCOUNT" EntityType="Self.EXTERNALACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FOOD" EntityType="Self.FOOD" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LIKEUSER" EntityType="Self.LIKEUSER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOODORDER" EntityType="Self.FOODORDER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPEFOOD" EntityType="Self.TYPEFOOD" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -115,9 +130,7 @@
           <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PASSWORDHASH" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="SALT" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="BIRTHDATE" Type="DateTime" Precision="3" />
           <Property Name="IMAGEACC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GENDER" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ACCOUNT_ROLE">
           <Key>
@@ -154,18 +167,20 @@
           <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DECRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IDTYPE" Type="Int32" />
-          <Property Name="STATUSFOOD" Type="Int32" />
+          <Property Name="NUMBER" Type="Int32" />
           <Property Name="IMGFOOD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PRICE" Type="Double" />
-          <Property Name="DATESALE" Type="DateTime" Precision="3" />
+          <Property Name="ISSALE" Type="Int32" />
         </EntityType>
-        <EntityType Name="LIKEUSER">
+        <EntityType Name="FOODORDER">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDUSER" Type="Int32" Nullable="false" />
           <Property Name="IDFOOD" Type="Int32" Nullable="false" />
+          <Property Name="STATUSODER" Type="Int32" />
+          <Property Name="NUMBER" Type="Int32" />
         </EntityType>
         <EntityType Name="LIST_ROLE">
           <Key>
@@ -189,36 +204,61 @@
           <EntitySet Name="COMMENTs" EntityType="Self.COMMENT" />
           <EntitySet Name="EXTERNALACCOUNTs" EntityType="Self.EXTERNALACCOUNT" />
           <EntitySet Name="FOODs" EntityType="Self.FOOD" />
-          <EntitySet Name="LIKEUSERs" EntityType="Self.LIKEUSER" />
+          <EntitySet Name="FOODORDERs" EntityType="Self.FOODORDER" />
           <EntitySet Name="LIST_ROLE" EntityType="Self.LIST_ROLE" />
           <EntitySet Name="TYPEFOODs" EntityType="Self.TYPEFOOD" />
+          <FunctionImport Name="usp_LoaiMonAn" ReturnType="Collection(FOODModel.usp_LoaiMonAn_Result)">
+            <Parameter Name="TYPE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemMonAn">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="decription" Mode="In" Type="String" />
+            <Parameter Name="issale" Mode="In" Type="Int32" />
+            <Parameter Name="idtype" Mode="In" Type="Int32" />
+            <Parameter Name="img" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Double" />
+            <Parameter Name="NUMBER" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="usp_TimKiemMonAn" ReturnType="Collection(FOODModel.usp_TimKiemMonAn_Result)">
             <Parameter Name="TT" Mode="In" Type="String" />
             <Parameter Name="row" Mode="In" Type="Int32" />
             <Parameter Name="count" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="usp_TopMonAnThich" ReturnType="Collection(FOODModel.usp_TopMonAnThich_Result)" />
+          <FunctionImport Name="usp_XoaMonAn">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="usp_LoaiMonAn_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DECRIPTION" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ISSALE" Nullable="true" />
+          <Property Type="Int32" Name="IDTYPE" Nullable="true" />
+          <Property Type="String" Name="IMGFOOD" Nullable="true" MaxLength="200" />
+          <Property Type="Double" Name="PRICE" Nullable="true" />
+          <Property Type="Int32" Name="NUMBER" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="usp_TimKiemMonAn_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="DECRIPTION" Nullable="true" MaxLength="500" />
-          <Property Type="DateTime" Name="DATESALE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ISSALE" Nullable="true" />
           <Property Type="Int32" Name="IDTYPE" Nullable="true" />
           <Property Type="String" Name="IMGFOOD" Nullable="true" MaxLength="200" />
           <Property Type="Double" Name="PRICE" Nullable="true" />
-          <Property Type="Int32" Name="STATUSFOOD" Nullable="true" />
-          <Property Type="Int32" Name="SoLuongThich" Nullable="true" />
+          <Property Type="Int32" Name="NUMBER" Nullable="true" />
+          <Property Type="Int32" Name="SOLUONGDATHANG" Nullable="true" />
         </ComplexType>
         <ComplexType Name="usp_TopMonAnThich_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="DECRIPTION" Nullable="true" MaxLength="500" />
-          <Property Type="DateTime" Name="DATESALE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ISSALE" Nullable="true" />
           <Property Type="Int32" Name="IDTYPE" Nullable="true" />
           <Property Type="String" Name="IMGFOOD" Nullable="true" MaxLength="200" />
           <Property Type="Double" Name="PRICE" Nullable="true" />
-          <Property Type="Int32" Name="STATUSFOOD" Nullable="true" />
+          <Property Type="Int32" Name="NUMBER" Nullable="true" />
           <Property Type="Int32" Name="COUNT" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -235,9 +275,7 @@
                 <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
                 <ScalarProperty Name="PASSWORDHASH" ColumnName="PASSWORDHASH" />
                 <ScalarProperty Name="SALT" ColumnName="SALT" />
-                <ScalarProperty Name="BIRTHDATE" ColumnName="BIRTHDATE" />
                 <ScalarProperty Name="IMAGEACC" ColumnName="IMAGEACC" />
-                <ScalarProperty Name="GENDER" ColumnName="GENDER" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -277,19 +315,21 @@
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="DECRIPTION" ColumnName="DECRIPTION" />
                 <ScalarProperty Name="IDTYPE" ColumnName="IDTYPE" />
-                <ScalarProperty Name="STATUSFOOD" ColumnName="STATUSFOOD" />
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
                 <ScalarProperty Name="IMGFOOD" ColumnName="IMGFOOD" />
                 <ScalarProperty Name="PRICE" ColumnName="PRICE" />
-                <ScalarProperty Name="DATESALE" ColumnName="DATESALE" />
+                <ScalarProperty Name="ISSALE" ColumnName="ISSALE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LIKEUSERs">
-            <EntityTypeMapping TypeName="FOODModel.LIKEUSER">
-              <MappingFragment StoreEntitySet="LIKEUSER">
+          <EntitySetMapping Name="FOODORDERs">
+            <EntityTypeMapping TypeName="FOODModel.FOODORDER">
+              <MappingFragment StoreEntitySet="FOODORDER">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
                 <ScalarProperty Name="IDFOOD" ColumnName="IDFOOD" />
+                <ScalarProperty Name="STATUSODER" ColumnName="STATUSODER" />
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -311,18 +351,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_LoaiMonAn" FunctionName="FOODModel.Store.usp_LoaiMonAn">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FOODModel.usp_LoaiMonAn_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DECRIPTION" ColumnName="DECRIPTION" />
+                <ScalarProperty Name="ISSALE" ColumnName="ISSALE" />
+                <ScalarProperty Name="IDTYPE" ColumnName="IDTYPE" />
+                <ScalarProperty Name="IMGFOOD" ColumnName="IMGFOOD" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_ThemMonAn" FunctionName="FOODModel.Store.usp_ThemMonAn" />
           <FunctionImportMapping FunctionImportName="usp_TimKiemMonAn" FunctionName="FOODModel.Store.usp_TimKiemMonAn">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FOODModel.usp_TimKiemMonAn_Result">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="DECRIPTION" ColumnName="DECRIPTION" />
-                <ScalarProperty Name="DATESALE" ColumnName="DATESALE" />
+                <ScalarProperty Name="ISSALE" ColumnName="ISSALE" />
                 <ScalarProperty Name="IDTYPE" ColumnName="IDTYPE" />
                 <ScalarProperty Name="IMGFOOD" ColumnName="IMGFOOD" />
                 <ScalarProperty Name="PRICE" ColumnName="PRICE" />
-                <ScalarProperty Name="STATUSFOOD" ColumnName="STATUSFOOD" />
-                <ScalarProperty Name="SoLuongThich" ColumnName="SoLuongThich" />
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+                <ScalarProperty Name="SOLUONGDATHANG" ColumnName="SOLUONGDATHANG" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -332,15 +387,16 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="DECRIPTION" ColumnName="DECRIPTION" />
-                <ScalarProperty Name="DATESALE" ColumnName="DATESALE" />
+                <ScalarProperty Name="ISSALE" ColumnName="ISSALE" />
                 <ScalarProperty Name="IDTYPE" ColumnName="IDTYPE" />
                 <ScalarProperty Name="IMGFOOD" ColumnName="IMGFOOD" />
                 <ScalarProperty Name="PRICE" ColumnName="PRICE" />
-                <ScalarProperty Name="STATUSFOOD" ColumnName="STATUSFOOD" />
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
                 <ScalarProperty Name="COUNT" ColumnName="COUNT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_XoaMonAn" FunctionName="FOODModel.Store.usp_XoaMonAn" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
