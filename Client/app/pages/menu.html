@@ -20,7 +20,7 @@
             </div>
             <div class="div-tabs">
                 <div ng-if="idtype == 1" id="tab-1" class="tab-content gallery1">
-                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{statusfood: 1, idtype: 1}">
+                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{issale: 1, idtype: 1}">
                         <a href="" class="gal" ng-click="success(listFood.indexOf(foodItem))"><img src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" height="187" width="187"><span></span></a>
                         <div class="check-element sample-show-hide" ng-show="toggle">
                             {{foodItem.decription}}
@@ -32,7 +32,7 @@
                 <div ng-if="idtype == 2" id="tab-2" class="tab-content gallery2">
 
                     <div class="clear"></div>
-                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{statusfood: 1, idtype: 2}">
+                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{issale: 1, idtype: 2}">
                         <a href="" class="gal" ng-click="success(listFood.indexOf(foodItem))"><img src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" height="187" width="187"><span></span></a>
                         <div class="check-element sample-show-hide" ng-show="toggle">
                             {{foodItem.decription}}
@@ -42,7 +42,7 @@
 
                 </div>
                 <div ng-if="idtype == 3" id="tab-3" class="tab-content gallery3">
-                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{statusfood: 1, idtype: 3}">
+                    <div class="grid_3" ng-repeat="foodItem in listFood | filter:{issale: 1, idtype: 3}">
                         <a href="" class="gal" ng-click="success(listFood.indexOf(foodItem))"><img src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" height="187" width="187"><span></span></a>
                         <div class="check-element sample-show-hide" ng-show="toggle">
                             {{foodItem.decription}}

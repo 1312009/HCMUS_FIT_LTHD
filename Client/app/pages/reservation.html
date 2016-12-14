@@ -1,0 +1,53 @@
+<div class="content">
+    <div class="container_12">
+        <h3>Các món đã đặt</h3>
+        <table id="TABLE_1">
+            <thead id="THEAD_2">
+            <tr id="TR_3">
+                <th id="TH_4">
+                    Tên món
+                </th>
+                <th id="TH_5">
+                    Giá
+                </th>
+                <th id="TH_6">
+                    Số lượng
+                </th>
+                <th id="TH_7">
+                    Tổng
+                </th>
+            </tr>
+            </thead>
+            <tbody id="TBODY_8">
+            <tr id="TR_9" ng-repeat="foodItem in $storage.cp" ng-if="foodItem.isSale > 0">
+                <td id="TD_10">
+                    <div id="DIV_11">
+                        <a id="A_12"><img width="60" src="{{foodItem.foodImage}}" alt="Vòi xịt rửa xe đa năng 7m giãn nở 22.5m" id="IMG_13" /></a> <strong id="STRONG_14">{{foodItem.$id}}</strong>
+                    </div>
+                    <input type="hidden" name="price_1" value="175000" id="INPUT_15" />
+                    <input type="hidden" name="id_1" value="148144" id="INPUT_16" />
+                </td>
+                <td id="TD_17">
+                    <span id="SPAN_18">{{foodItem.foodPrice}}đ</span>
+                </td>
+                <td id="TD_19">
+
+                    <input type="number" id="INPUT_20" ng-model="num[$storage.cp.indexOf(foodItem)]" ng-change="change1($storage.cp.indexOf(foodItem))"/> <a id="A_21" ng-click="remove($storage.cp.indexOf(foodItem))">Bỏ sản phẩm</a>
+                </td>
+                <td id="TD_22">
+                    <span id="SPAN_23">{{foodItem.foodPrice * foodItem.isSale}}đ</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="DIV_115">
+            <div id="DIV_247">
+                <strong id="STRONG_3zz">Thành tiền</strong>
+            </div>
+            <div id="DIV_4jh">
+                <span id="SPAN_500">{{sum()}}đ</span>
+            </div>
+        </div>
+        <a href="index_payment.html" id="A_1m">Thanh toán</a>
+    </div>
+</div>

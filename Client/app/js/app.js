@@ -47,6 +47,11 @@ define(function (require) {
                     templateUrl: "/pages/menu.html",
                     controller: "menu"
                 })
+                .state("reservation", {
+                    url: '/reservation',
+                    templateUrl: "/pages/reservation.html",
+                    controller: "reservation"
+                })
                 .state('get_token', {
                     url: '/access_token=:accessToken',
                     template: '',
