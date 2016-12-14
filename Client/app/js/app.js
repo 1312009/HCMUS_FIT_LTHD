@@ -16,7 +16,8 @@ define(function (require) {
         'controllers',
         'services',
         'ui.router',
-        'angular-storage'
+        'angular-storage',
+        'ngMap'
     ]);
 
     app.init = function () {
@@ -51,6 +52,11 @@ define(function (require) {
                     url: '/reservation',
                     templateUrl: "/pages/reservation.html",
                     controller: "reservation"
+                })
+                .state("contact", {
+                    url: '/contact',
+                    templateUrl: "/pages/contact.html",
+                    controller: "contact"
                 })
                 .state('get_token', {
                     url: '/access_token=:accessToken',

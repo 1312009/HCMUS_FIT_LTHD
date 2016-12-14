@@ -6,11 +6,12 @@
 @import "../css/reset.css";
 @import "../css/grid.css";
 @import "../css/menu.css";
+@import "../css/form.css";
 
 
 input {
     outline:  none !important;
-    border-radius: 0 !important;	 
+    border-radius: 0 !important;
 }
 
 
