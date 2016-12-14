@@ -7,9 +7,20 @@ define(function (require) {
 
     var menu = angular.module('menu', []);
 
-    menu.controller('menu', function ($http, $scope, store, sharedData) {
+    menu.controller('menu', function ($http, $scope, store, sharedData, $rootScope) {
 
         $scope.listFood = sharedData.listFood;
+
+        $scope.cart = [];
+        if(angular.isDefined(store.get('cart')) && store.get('cart') !== null)
+        {
+            $scope.cart = store.get('cart');
+        }
+
+        $scope.item = {
+            name: null,
+            price: null
+        };
         $scope.toggle = false;
         $scope.idtype = 1;
         $scope.breakFirst = "selected";
@@ -35,6 +46,14 @@ define(function (require) {
             $scope.breakFirst = "";
             $scope.lunch = "";
             $scope.dinner = "selected";
+        };
+
+        $scope.success = function (id) {
+            $scope.item.name = $scope.listFood[id].name;
+            $scope.item.price = $scope.listFood[id].price;
+            $scope.cart.push($scope.item);
+            store.set('cart', $scope.cart);
+            $rootScope.$emit("updateCart", {});
         };
     });
 

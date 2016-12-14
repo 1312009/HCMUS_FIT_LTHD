@@ -7,7 +7,7 @@ define(function (require) {
 
     var social = angular.module('socialLogin', []);
 
-    social.controller('socialLogin', function ($http, $scope, store) {
+    social.controller('socialLogin', function ($http, $scope, store, $rootScope) {
 
         $scope.loginGG = function () {
             var client_id = "872912626455-bvlpomh5rsnccib0of29qjfj9o4u59ir.apps.googleusercontent.com";
@@ -68,7 +68,23 @@ define(function (require) {
             store.remove('dataSocial');
             store.remove('accessToken');
             store.remove('jwt');
+            store.remove('cart');
         };
+
+        $scope.cart = 0;
+        if(angular.isDefined(store.get('cart')) && store.get('cart') !== null)
+        {
+            $scope.cart = store.get('cart').length;
+        }
+
+        $rootScope.$on("updateCart", function(){
+            $scope.updateCart();
+        });
+
+        $scope.updateCart = function () {
+            $scope.cart = store.get('cart').length;
+        };
+
     });
 
     return social;
