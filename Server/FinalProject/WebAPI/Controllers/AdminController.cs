@@ -13,11 +13,65 @@ namespace WebAPI.Controllers
     [RoutePrefix("api/Admin")]
     public class AdminController : ApiController
     {
+        private static readonly string[] VietnameseSigns = new string[]
+{
+
+"aAeEoOuUiIdDyY",
+
+"áàạảãâấầậẩẫăắằặẳẵ",
+
+"ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+
+"éèẹẻẽêếềệểễ",
+
+"ÉÈẸẺẼÊẾỀỆỂỄ",
+
+"óòọỏõôốồộổỗơớờợởỡ",
+
+"ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+
+"úùụủũưứừựửữ",
+
+"ÚÙỤỦŨƯỨỪỰỬỮ",
+
+"íìịỉĩ",
+
+"ÍÌỊỈĨ",
+
+"đ",
+
+"Đ",
+
+"ýỳỵỷỹ",
+
+"ÝỲỴỶỸ"
+
+};
+
+        public static string locDau(string str)
+        {
+
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+
+                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+
+            }
+
+            return str;
+
+        }
         public FOODEntities db = new FOODEntities();
         [Route("FindFood")]
         [HttpGet]
         public IEnumerable<usp_TimKiemMonAn_Result> FindFood(string name, string row, string count)
         {
+            if(!string.IsNullOrEmpty(name))
+            {
+                name = locDau(name);
+            }
             int convertrow = -1, convertcount = -1;
 
             if (!string.IsNullOrEmpty(row))
