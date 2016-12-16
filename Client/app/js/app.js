@@ -58,6 +58,11 @@ define(function (require) {
                     templateUrl: "/pages/contact.html",
                     controller: "contact"
                 })
+                .state("admin", {
+                    url: '/admin',
+                    templateUrl: "/pages/admin.html",
+                    controller: "admin"
+                })
                 .state('get_token', {
                     url: '/access_token=:accessToken',
                     template: '',

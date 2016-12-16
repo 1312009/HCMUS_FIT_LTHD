@@ -1,0 +1,126 @@
+<div class="content" >
+<div class="content_input">
+    <table class="form_input">
+        <tr>
+            <th  colspan="2" >Tên món ăn:</th>
+            <td colspan="8" >  <input type="text" ng-model="foodName" value=""></td>
+        </tr>
+
+        <tr class="foodType">
+            <th  colspan="2" >Loại</th>
+            <td colspan="2" >
+                <input type="checkbox"  ng-checked="{{typeBreakfast}}==true" ng-model="typeBreakfast">Sáng
+            </td>
+            <td colspan="2" >
+                <input type="checkbox" ng-checked="{{typeLunch}}==true" ng-model="typeLunch">Trưa
+            </td>
+            <td colspan="2" >
+                <input type="checkbox"  ng-checked="{{typeDinner}}==true"  ng-model="typeDinner">Tối
+            </td>
+            <td colspan="2" >
+                <input type="checkbox"  ng-checked="{{isSale}}==true" ng-model="isSale" >Có bán
+            </td>
+        </tr>
+
+
+        <tr>
+            <th   colspan="2"  >Giá tiền: </th>
+            <th colspan="8" ><input type="number" ng-model="foodPrice"  value=""></th>
+        </tr>
+
+
+
+
+
+
+        <tr>
+            <th colspan="2" >Hình ảnh:</th>
+            <th colspan="8" ><input type="text"  ng-model="foodImage"  value=""></th>
+        </tr>
+
+
+        <tr id="rowFoodDetail" >
+            <th colspan="2" >Chi tiết món ăn:</th>
+            <th colspan="8" ><textarea cols="40" rows="5" ng-model="foodDetail" id="foodDetail"></textarea> </th>
+        </tr>
+
+
+        <tr>
+            <th colspan="10" align="right"><button id="btnAddFood" ng-click="addFood()">Thêm món ăn</button></th>
+        </tr>
+
+
+    </table>
+
+    <!--    <images id="img_preview" ng-src="http://unuquan.com/wp-content/uploads/2012/12/Ca-tre-chien-cham-mam-gung-1.jpg"></images> -->
+
+
+
+</div>
+
+
+<div style="margin-top: 50px;">
+    <table id="TABLE_1">
+        <thead id="THEAD_2">
+        <tr id="TR_3">
+            <th id="TH_4">
+                Tên món ăn
+            </th>
+            <th id="TH_5">
+                Chi tiết món ăn
+            </th>
+            <th id="TH_6">
+                Giá
+            </th>
+            <th id="TH_7">
+                Loại món ăn
+            </th>
+            <th id="TH_8">
+                Trạng thái
+            </th>
+            <th id="TH_9">
+                Sửa
+            </th>
+            <th id="TH_10">
+                Xoá
+            </th>
+        </tr>
+        </thead>
+        <tbody id="TBODY_8" ng-repeat="foodItem in listFood">
+        <tr id="TR_9">
+            <td id="TD_10">
+                <div id="DIV_11">
+                    <a id="A_12"><img width="60" src="{{foodItem.imgfood}}" alt="{{foodItem.name}}" id="IMG_13" /></a> <strong id="STRONG_14">{{foodItem.name}}</strong>
+                </div>
+            </td>
+            <td id="TD_18">
+                <span id="SPAN_19">{{foodItem.decription}}</span>
+            </td>
+            <td id="TD_17">
+                <span id="SPAN_18">{{foodItem.price}}</span>
+            </td>
+            <td id="TD_19">
+
+                <span id="SPAN_23">{{getFoodType(foodItem)}}</span>
+            </td>
+            <td id="TD_22">
+                <span> {{getFoodState(foodItem)}}</span>
+            </td>
+
+            <td id="TD_23">
+                <button ng-click="updateFood(foodItem)">Sửa</button>
+            </td>
+
+
+            <td id="TD_23">
+                <button ng-click="removeFood(foodItem)">Xoá</button>
+            </td>
+
+
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>

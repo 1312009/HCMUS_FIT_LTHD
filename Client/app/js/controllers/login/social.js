@@ -7,7 +7,27 @@ define(function (require) {
 
     var social = angular.module('socialLogin', []);
 
-    social.controller('socialLogin', function ($http, $scope, store, $rootScope) {
+    social.controller('socialLogin', function ($http, $scope, store, $rootScope, sharedData) {
+
+        store.remove('cart');
+        store.remove('count');
+        console.log("social");
+        callApi('Secured', 'http://localhost:59219/api/foods/GetAllFoods');
+
+
+        function callApi(type, url) {
+            // $scope.response = null;
+            $scope.api = type;
+            $http({
+                url: url,
+                method: 'GET',
+            }).then(function(response) {
+                sharedData.listFood = response.data;
+                console.log(sharedData.listFood);
+            }, function(error) {
+                console.log(error);
+            });
+        }
 
         $scope.loginGG = function () {
             var client_id = "872912626455-bvlpomh5rsnccib0of29qjfj9o4u59ir.apps.googleusercontent.com";
@@ -74,7 +94,7 @@ define(function (require) {
         $scope.cart = 0;
         if(angular.isDefined(store.get('cart')) && store.get('cart') !== null)
         {
-            $scope.cart = store.get('cart').length;
+            $scope.cart = store.get('count');
         }
 
         $rootScope.$on("updateCart", function(){
@@ -82,7 +102,7 @@ define(function (require) {
         });
 
         $scope.updateCart = function () {
-            $scope.cart = store.get('cart').length;
+            $scope.cart = store.get('count');
         };
 
     });

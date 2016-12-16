@@ -11,9 +11,10 @@ define(function (require) {
     var reservation = require('./reservation');
     var contact = require('./contact');
     var email = require('./email');
+    var admin = require('./admin');
     var getToken = require('./login/getToken');
 
-    var controllers = angular.module('controllers',['socialLogin','home','emailLogin','getToken','menu','reservation','contact']);
+    var controllers = angular.module('controllers',['socialLogin','home','emailLogin','getToken','menu','reservation','contact','admin']);
 
     return controllers;
 });

@@ -19,23 +19,23 @@
             </tr>
             </thead>
             <tbody id="TBODY_8">
-            <tr id="TR_9" ng-repeat="foodItem in $storage.cp" ng-if="foodItem.isSale > 0">
+            <tr id="TR_9" ng-repeat="foodItem in cart">
                 <td id="TD_10">
                     <div id="DIV_11">
-                        <a id="A_12"><img width="60" src="{{foodItem.foodImage}}" alt="Vòi xịt rửa xe đa năng 7m giãn nở 22.5m" id="IMG_13" /></a> <strong id="STRONG_14">{{foodItem.$id}}</strong>
+                        <a id="A_12"><img width="60" src="{{foodItem.imgfood}}" id="IMG_13" /></a> <strong id="STRONG_14">{{foodItem.name}}</strong>
                     </div>
                     <input type="hidden" name="price_1" value="175000" id="INPUT_15" />
                     <input type="hidden" name="id_1" value="148144" id="INPUT_16" />
                 </td>
                 <td id="TD_17">
-                    <span id="SPAN_18">{{foodItem.foodPrice}}đ</span>
+                    <span id="SPAN_18">{{foodItem.price}}đ</span>
                 </td>
                 <td id="TD_19">
 
-                    <input type="number" id="INPUT_20" ng-model="num[$storage.cp.indexOf(foodItem)]" ng-change="change1($storage.cp.indexOf(foodItem))"/> <a id="A_21" ng-click="remove($storage.cp.indexOf(foodItem))">Bỏ sản phẩm</a>
+                    <input type="number" id="INPUT_20" ng-model='foodItem.count' ng-change="change1($storage.cp.indexOf(foodItem))"/> <a id="A_21" ng-click="remove($storage.cp.indexOf(foodItem))">Bỏ sản phẩm</a>
                 </td>
                 <td id="TD_22">
-                    <span id="SPAN_23">{{foodItem.foodPrice * foodItem.isSale}}đ</span>
+                    <span id="SPAN_23">{{foodItem.price * foodItem.count}}đ</span>
                 </td>
             </tr>
             </tbody>
