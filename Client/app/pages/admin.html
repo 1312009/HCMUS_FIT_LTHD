@@ -9,13 +9,13 @@
         <tr class="foodType">
             <th  colspan="2" >Loại</th>
             <td colspan="2" >
-                <input type="checkbox"  ng-checked="{{typeBreakfast}}==true" ng-model="typeBreakfast">Sáng
+                <input type="radio"  ng-checked="{{typeBreakfast}}==true" ng-model="idType" value = "1">Sáng
             </td>
             <td colspan="2" >
-                <input type="checkbox" ng-checked="{{typeLunch}}==true" ng-model="typeLunch">Trưa
+                <input type="radio" ng-checked="{{typeLunch}}==true" ng-model="idType" value = "2">Trưa
             </td>
             <td colspan="2" >
-                <input type="checkbox"  ng-checked="{{typeDinner}}==true"  ng-model="typeDinner">Tối
+                <input type="radio"  ng-checked="{{typeDinner}}==true"  ng-model="idType" value = "3">Tối
             </td>
             <td colspan="2" >
                 <input type="checkbox"  ng-checked="{{isSale}}==true" ng-model="isSale" >Có bán
@@ -41,12 +41,12 @@
 
         <tr id="rowFoodDetail" >
             <th colspan="2" >Chi tiết món ăn:</th>
-            <th colspan="8" ><textarea cols="40" rows="5" ng-model="foodDetail" id="foodDetail"></textarea> </th>
+            <th colspan="8" ><textarea cols="40" rows="5" ng-model="foodDescription" id="foodDetail"></textarea> </th>
         </tr>
 
 
         <tr>
-            <th colspan="10" align="right"><button id="btnAddFood" ng-click="addFood()">Thêm món ăn</button></th>
+            <th colspan="10" align="right"><button id="btnAddFood" ng-click="addFood()">{{nameOfBtn}}</button></th>
         </tr>
 
 

@@ -17,11 +17,14 @@ define(function (require) {
             }).then(function successCallback(response) {
                 store.set('jwt', response.data);
                 console.log(response);
-                window.location.replace('http://localhost:3000');
+                if(response.data.dbUser.name == "1312009")
+                    $state.go("admin");
+                else
+                    window.location.replace('http://localhost:3000');
                 // $state.go("/");
             }, function errorCallback(response) {
                 console.log(response);
-                console.loged($scope.user);
+                console.log($scope.user);
             });
         };
     });

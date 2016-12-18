@@ -7,9 +7,11 @@ define(function (require) {
 
     var menu = angular.module('menu', []);
 
-    menu.controller('menu', function ($http, $scope, store, sharedData, $rootScope) {
+    menu.controller('menu', function ($http, $scope, store, sharedData, $rootScope,$timeout) {
 
-        $scope.listFood = sharedData.listFood;
+        $timeout(function () {
+            $scope.listFood = sharedData.listFood;
+        }, 200);
 
         $scope.cart = [];
         $scope.count = 0;
