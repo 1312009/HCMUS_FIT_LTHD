@@ -57,6 +57,49 @@ define(function (require) {
                     console.log(response);
                 });
             }
+            else {
+                if(
+                    $scope.foodName !== "" &&
+                    $scope.foodPrice !== "" &&
+                    $scope.idType !== null &&
+                    $scope.foodImage !== "" &&
+                    $scope.foodDescription !== ""
+                )
+                {
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:59219/api/Admin/AddFood',
+                        headers: {
+                            Authorization: $scope.jwt.token
+                        },
+                        data: {
+                            NAME: $scope.foodName,
+                            DECRIPTION: $scope.foodDescription,
+                            IDTYPE: parseInt($scope.idType),
+                            NUMBER: 10,
+                            IMGFOOD: $scope.foodImage,
+                            PRICE: $scope.foodPrice,
+                            ISSALE: $scope.isSale === true ? 1 : 0
+                        }
+                    }).then(function successCallback(response) {
+                        addItem();
+                        $scope.nameOfBtn = "Thêm món ăn";
+                        $scope.foodName = "";
+                        $scope.foodPrice = "";
+                        $scope.idType = null;
+                        $scope.isSale = null;
+                        $scope.foodImage = "";
+                        $scope.foodDescription = "";
+                        $scope.id = null;
+                    }, function errorCallback(response) {
+                        console.log(response);
+                    });
+                }
+                else
+                {
+                    console.log("Vui long nhap day du du lieu!");
+                }
+            }
         };
 
         $scope.updateFood = function (food) {
@@ -91,6 +134,19 @@ define(function (require) {
                 console.log(response);
             });
         };
+
+        function addItem() {
+            $http({
+                url: "http://localhost:59219/api/foods/GetAllFoods",
+                method: 'GET',
+            }).then(function successCallback(response) {
+                sharedData.listFood = response.data;
+                $scope.listFood = sharedData.listFood;
+                console.log(response);
+            }, function errorCallback(error) {
+                console.log(error);
+            });
+        }
 
         function updateItem(id) {
             for(var i = 0; i < $scope.listFood.length; i ++)
