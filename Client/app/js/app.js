@@ -63,6 +63,11 @@ define(function (require) {
                     templateUrl: "/pages/admin.html",
                     controller: "admin"
                 })
+                .state("payment", {
+                    url: '/payment',
+                    templateUrl: "/pages/payment.html",
+                    controller: ""
+                })
                 .state('get_token', {
                     url: '/access_token=:accessToken',
                     template: '',
