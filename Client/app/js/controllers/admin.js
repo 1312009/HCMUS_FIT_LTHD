@@ -39,7 +39,7 @@ define(function (require) {
                         NUMBER: 10,
                         IMGFOOD: $scope.foodImage,
                         PRICE: $scope.foodPrice,
-                        ISSALE: $scope.isSale == true ? 1 : 0,
+                        ISSALE: $scope.isSale === true ? 1 : 0,
                         ID: $scope.id
                     }
                 }).then(function successCallback(response) {
@@ -101,7 +101,7 @@ define(function (require) {
                     $scope.listFood[i].idtype = parseInt($scope.idType);
                     $scope.listFood[i].decription = $scope.foodDescription;
                     $scope.listFood[i].imgfood = $scope.foodImage;
-                    $scope.listFood[i].issale = $scope.isSale == true ? 1 : 0;
+                    $scope.listFood[i].issale = $scope.isSale === true ? 1 : 0;
                 }
             }
             console.log($scope.listFood);
