@@ -7,16 +7,18 @@ define(function (require) {
 
     var home = angular.module('home', []);
 
-    home.controller('home', function ($http, $scope, store, sharedData, $timeout) {
-
-        // $scope.msg = "Đăng nhập thành công";
-        // $scope.jwt = store.get('jwt');
-        // $scope.accessToken = "access_token=" + store.get('accessToken').access_token;
+    home.controller('home', function ($state, $scope, store, sharedData, $timeout) {
 
         $timeout(function () {
             $scope.listFood = sharedData.listFood;
         }, 200);
 
+        var meals = ["","",""];
+        $scope.gotoMenu = function (id) {
+            meals[id] = "selected";
+            sharedData.meals = meals;
+            $state.go("menu");
+        };
 
     });
 

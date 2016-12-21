@@ -29,31 +29,20 @@ define(function (require) {
         };
         $scope.toggle = false;
         $scope.idtype = 1;
-        $scope.breakFirst = "selected";
-        $scope.lunch = "";
-        $scope.dinner = "";
+        $scope.meals = sharedData.meals;
 
-        $scope.breakFirstClick = function () {
-            $scope.idtype = 1;
-            $scope.breakFirst = "selected";
-            $scope.lunch = "";
-            $scope.dinner = "";
+        $scope.changeMeals = function (id) {
+            $scope.idtype = id;
+            id = id - 1;
+            for(var i = 0; i < 3; i++)
+            {
+                if(i === id)
+                    $scope.meals[i] = "selected";
+                else
+                    $scope.meals[i] = "";
+            }
         };
 
-        $scope.lunchClick = function () {
-            $scope.idtype = 2;
-            $scope.breakFirst = "";
-            $scope.lunch = "selected";
-            $scope.dinner = "";
-        };
-
-        $scope.dinnerClick = function () {
-            $scope.idtype = 3;
-            $scope.breakFirst = "";
-            $scope.lunch = "";
-            $scope.dinner = "selected";
-        };
-        console.log($scope.cart);
         $scope.success = function (id) {
             $scope.item.name = $scope.listFood[id].name;
             $scope.item.price = $scope.listFood[id].price;

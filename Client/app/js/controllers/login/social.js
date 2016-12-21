@@ -105,6 +105,26 @@ define(function (require) {
             $scope.cart = store.get('count');
         };
 
+        //set current menu
+        $scope.currentMenu = ["current", "", "", ""];
+
+        if(window.location.hash === "#/menu")
+            $scope.currentMenu = ["", "current", "", ""];
+        if(window.location.hash === "#/reservation")
+            $scope.currentMenu = ["", "", "current", ""];
+        if(window.location.hash === "#/contact")
+            $scope.currentMenu = ["", "", "", "current"];
+
+        $scope.changeCurrentMenu = function (id) {
+            for(var i = 0; i < 4; i++)
+            {
+                if(i === id)
+                    $scope.currentMenu[i] = "current";
+                else
+                    $scope.currentMenu[i] = "";
+            }
+        };
+
     });
 
     return social;

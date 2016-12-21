@@ -9,11 +9,11 @@
             <div class="div-nav  ">
                 <div class="grid_12">
                     <ul class="nav">
-                        <li ng-class="breakFirst"><a ng-click="breakFirstClick()" class="">Điểm tâm</a></li>
+                        <li ng-class="meals[0]"><a ng-click="changeMeals(1)" class="">Điểm tâm</a></li>
 
-                        <li ng-class="lunch"><a ng-click="lunchClick()">Cơm trưa</a></li>
+                        <li ng-class="meals[1]"><a ng-click="changeMeals(2)">Cơm trưa</a></li>
 
-                        <li ng-class="dinner"><a ng-click="dinnerClick()">Cơm tối</a></li>
+                        <li ng-class="meals[2]"><a ng-click="changeMeals(3)">Cơm tối</a></li>
 
                     </ul>
                 </div>
