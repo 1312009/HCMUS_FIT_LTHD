@@ -17,7 +17,8 @@ define(function (require) {
         'services',
         'ui.router',
         'angular-storage',
-        'ngMap'
+        'ngMap',
+        'ui-notification'
     ]);
 
     app.init = function () {

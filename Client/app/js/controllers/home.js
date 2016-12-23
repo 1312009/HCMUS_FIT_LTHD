@@ -7,11 +7,11 @@ define(function (require) {
 
     var home = angular.module('home', []);
 
-    home.controller('home', function ($state, $scope, store, sharedData, $timeout, $rootScope) {
+    home.controller('home', function ($state, $scope, store, sharedData, $timeout, $rootScope, Notification) {
 
         $timeout(function () {
             $scope.listFood = sharedData.listFood;
-        }, 200);
+        }, 250);
 
         var meals = ["","",""];
         $scope.gotoMenu = function (id) {
@@ -74,15 +74,9 @@ define(function (require) {
 
             store.set('cart', $scope.cart);
             store.set('count', $scope.count);
-            console.log($scope.cart.indexOf({
-                count: $scope.item.count,
-                name: $scope.item.name,
-                price: $scope.item.price,
-                imgfood: $scope.item.imgfood
-            }));
-            console.log($scope.item);
-            console.log($scope.cart);
+
             $rootScope.$emit("updateCart", {});
+            Notification.info({message: 'Đã thêm vào giỏ hàng!', delay: 1500});
         };
     });
 
