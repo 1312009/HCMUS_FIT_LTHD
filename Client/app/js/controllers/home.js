@@ -17,6 +17,7 @@ define(function (require) {
         $scope.gotoMenu = function (id) {
             meals[id] = "selected";
             sharedData.meals = meals;
+            $rootScope.$emit("setMenu", 1);
             $state.go("menu");
         };
 

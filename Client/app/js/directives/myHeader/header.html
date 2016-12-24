@@ -36,13 +36,13 @@
 </div>
 </div>
 <div id="cart">
-    <a ui-sref="reservation" id="nofc"><strong id="STRONG_333">{{cart}}</strong></a>
+    <a ui-sref="reservation" ng-click="changeCurrentMenu(2)" id="nofc"><strong id="STRONG_333">{{cart}}</strong></a>
     <div id="DIV_417">
         <h4 id="H4_515">
             Giỏ hàng
         </h4>
         <p id="P_611">
-            <a href="index_reservation.html" id="A_712">{{cart}} sản phẩm</a>
+            <a ui-sref="reservation" ng-click="changeCurrentMenu(2)" id="A_712">{{cart}} sản phẩm</a>
         </p>
     </div>
 </div>

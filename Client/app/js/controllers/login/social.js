@@ -60,7 +60,6 @@ define(function (require) {
                 loginSocial('Google');
             else
                 loginSocial('Facebook');
-            // $scope.user = store.get('dataSocial').dbUser;
         }
 
         if(angular.isDefined(store.get('jwt')) && store.get('jwt') !== null)
@@ -75,7 +74,7 @@ define(function (require) {
                 method: 'POST',
                 data: {Provider: provider, ExternalAccessToken: store.get('accessToken').access_token}
             }).then(function(response) {
-                store.set('dataSocial',response.data);
+                store.set('jwt',response.data);
                 $scope.user = response.data.dbUser;
                 console.log(response);
             }, function(error) {
@@ -85,7 +84,6 @@ define(function (require) {
 
         $scope.reset = function () {
             store.remove('social');
-            store.remove('dataSocial');
             store.remove('accessToken');
             store.remove('jwt');
             store.remove('cart');
@@ -98,10 +96,10 @@ define(function (require) {
         }
 
         $rootScope.$on("updateCart", function(){
-            $scope.updateCart();
+            updateCart();
         });
 
-        $scope.updateCart = function () {
+        var updateCart = function () {
             $scope.cart = store.get('count');
         };
 
@@ -124,6 +122,10 @@ define(function (require) {
                     $scope.currentMenu[i] = "";
             }
         };
+
+        $rootScope.$on("setMenu", function(event, id){
+            $scope.changeCurrentMenu(id);
+        });
 
     });
 
