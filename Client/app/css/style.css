@@ -1063,7 +1063,7 @@ footer a:hover {
     text-align: center;
     border: 0px none rgb(210, 0, 0);
     border-spacing: 1px 1px;
-    font: normal normal bold normal 13px / 18.5714px Arial;
+    /*font: normal normal bold normal 13px / 18.5714px Arial;*/
     outline: rgb(210, 0, 0) none 0px;
 }/*#SPAN_18, #SPAN_23*/
 
@@ -1116,7 +1116,7 @@ footer a:hover {
 
 #TD_22 {
     box-sizing: border-box;
-    color: rgb(51, 51, 51);
+    color: rgb(210, 0, 0);
     height: 68px;
     text-align: center;
     vertical-align: middle;
@@ -1273,14 +1273,46 @@ select{
 
 
 .form_input input{
-    height: 25px;
-    width: 100%;
-    float: left;
+    color: rgb(85, 85, 85);
+    height: 21px;
+    max-width: 320px;
+    text-overflow: ellipsis;
+    width: 279px;
+    perspective-origin: 152.484px 17px;
+    transform-origin: 152.484px 17px;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 3px 3px 3px 3px !important;
+    font: normal normal normal normal 13px / 18.5714px Arial, Helvetica, sans-serif;
+    outline: rgb(85, 85, 85) none 0px;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    margin-bottom: 5px;
+}
+
+.form_input textarea {
+    color: rgb(85, 85, 85);
+    height: 41px;
+    max-width: 320px;
+    width: 279px;
+    perspective-origin: 152.484px 25px;
+    transform-origin: 152.484px 25px;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 3px 3px 3px 3px !important;
+    font: normal normal normal normal 13px / 18.5714px Arial, Helvetica, sans-serif;
+    outline: rgb(85, 85, 85) none 0px;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    margin-bottom: 5px;
 }
 
 .foodType input{
-
+    margin-left: -2px;
     width:20px;
+    height: 15px;
+}
+
+.foodType a:hover {
+    color: inherit;
 }
 
 #img_preview{
@@ -1583,6 +1615,10 @@ select{
 
 #TD_18{
     background-color: white;
+}
+
+#TD_18 div {
+    height: 10px;
 }
 
 #detail{

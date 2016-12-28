@@ -10,7 +10,7 @@ define(function (require) {
     admin.controller('admin', function ($http, $scope, store, sharedData, $timeout) {
         $timeout(function () {
             $scope.listFood = sharedData.listFood;
-        }, 200);
+        }, 250);
 
         $scope.nameOfBtn = "Thêm món ăn";
         $scope.foodName = "";
@@ -22,7 +22,6 @@ define(function (require) {
         $scope.id = null;
 
         $scope.jwt = store.get('jwt');
-        console.log($scope.jwt.token);
 
         $scope.addFood = function () {
             if($scope.nameOfBtn == "Chỉnh sửa món ăn") {
@@ -173,6 +172,28 @@ define(function (require) {
             }
             console.log($scope.listFood);
         }
+
+        $scope.getFoodType = function (type) {
+            switch (type)
+            {
+                case 1:
+                    return "Sáng";
+                break;
+                case 2:
+                    return "Trưa";
+                break;
+                case 3:
+                    return "Tối";
+                break;
+            }
+        };
+
+        $scope.getFoodState = function (n) {
+            if(n > 0)
+                return "Có bán";
+            else
+                return "Hết hàng";
+        };
     });
 
     return admin;

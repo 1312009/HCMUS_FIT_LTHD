@@ -2,45 +2,44 @@
 <div class="content_input">
     <table class="form_input">
         <tr>
-            <th  colspan="2" >Tên món ăn:</th>
+            <th >Tên món ăn</th>
             <td colspan="8" >  <input type="text" ng-model="foodName" value=""></td>
         </tr>
 
         <tr class="foodType">
-            <th  colspan="2" >Loại</th>
+            <th  >Loại</th>
             <td colspan="2" >
-                <input type="radio"  ng-checked="{{typeBreakfast}}==true" ng-model="idType" value = "1">Sáng
+                <input type="radio" ng-model="idType" value = "1">
+                <a>Sáng</a>
             </td>
             <td colspan="2" >
-                <input type="radio" ng-checked="{{typeLunch}}==true" ng-model="idType" value = "2">Trưa
+                <input type="radio" ng-model="idType" value = "2">
+                <a>Trưa</a>
             </td>
             <td colspan="2" >
-                <input type="radio"  ng-checked="{{typeDinner}}==true"  ng-model="idType" value = "3">Tối
+                <input type="radio" ng-model="idType" value = "3">
+                <a>Tối</a>
             </td>
             <td colspan="2" >
-                <input type="checkbox"  ng-checked="{{isSale}}==true" ng-model="isSale" >Có bán
+                <input type="checkbox" ng-model="isSale" >
+                <a>Có bán</a>
             </td>
         </tr>
 
 
         <tr>
-            <th   colspan="2"  >Giá tiền: </th>
+            <th   >Giá tiền</th>
             <th colspan="8" ><input type="number" ng-model="foodPrice"  value=""></th>
         </tr>
 
-
-
-
-
-
         <tr>
-            <th colspan="2" >Hình ảnh:</th>
+            <th  >Hình ảnh</th>
             <th colspan="8" ><input type="text"  ng-model="foodImage"  value=""></th>
         </tr>
 
 
         <tr id="rowFoodDetail" >
-            <th colspan="2" >Chi tiết món ăn:</th>
+            <th >Chi tiết món ăn</th>
             <th colspan="8" ><textarea cols="40" rows="5" ng-model="foodDescription" id="foodDetail"></textarea> </th>
         </tr>
 
@@ -95,16 +94,17 @@
             </td>
             <td id="TD_18">
                 <span id="SPAN_19">{{foodItem.decription}}</span>
+                <div></div>
             </td>
             <td id="TD_17">
                 <span id="SPAN_18">{{foodItem.price}}</span>
             </td>
             <td id="TD_19">
 
-                <span id="SPAN_23">{{getFoodType(foodItem)}}</span>
+                <span id="SPAN_23">{{getFoodType(foodItem.idtype)}}</span>
             </td>
             <td id="TD_22">
-                <span> {{getFoodState(foodItem)}}</span>
+                <span> {{getFoodState(foodItem.issale)}}</span>
             </td>
 
             <td id="TD_23">
