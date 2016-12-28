@@ -60,7 +60,6 @@ define(function (require) {
                 loginSocial('Google');
             else
                 loginSocial('Facebook');
-            // $scope.user = store.get('dataSocial').dbUser;
         }
 
         if(angular.isDefined(store.get('jwt')) && store.get('jwt') !== null)
@@ -75,7 +74,7 @@ define(function (require) {
                 method: 'POST',
                 data: {Provider: provider, ExternalAccessToken: store.get('accessToken').access_token}
             }).then(function(response) {
-                store.set('dataSocial',response.data);
+                store.set('jwt',response.data);
                 $scope.user = response.data.dbUser;
                 console.log(response);
             }, function(error) {
@@ -85,7 +84,6 @@ define(function (require) {
 
         $scope.reset = function () {
             store.remove('social');
-            store.remove('dataSocial');
             store.remove('accessToken');
             store.remove('jwt');
             store.remove('cart');
@@ -98,12 +96,36 @@ define(function (require) {
         }
 
         $rootScope.$on("updateCart", function(){
-            $scope.updateCart();
+            updateCart();
         });
 
-        $scope.updateCart = function () {
+        var updateCart = function () {
             $scope.cart = store.get('count');
         };
+
+        //set current menu
+        $scope.currentMenu = ["current", "", "", ""];
+
+        if(window.location.hash === "#/menu")
+            $scope.currentMenu = ["", "current", "", ""];
+        if(window.location.hash === "#/reservation")
+            $scope.currentMenu = ["", "", "current", ""];
+        if(window.location.hash === "#/contact")
+            $scope.currentMenu = ["", "", "", "current"];
+
+        $scope.changeCurrentMenu = function (id) {
+            for(var i = 0; i < 4; i++)
+            {
+                if(i === id)
+                    $scope.currentMenu[i] = "current";
+                else
+                    $scope.currentMenu[i] = "";
+            }
+        };
+
+        $rootScope.$on("setMenu", function(event, id){
+            $scope.changeCurrentMenu(id);
+        });
 
     });
 

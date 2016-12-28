@@ -10,7 +10,8 @@ define(function (require) {
     sharedDT.factory("sharedData", [
         function(){
             var data = {
-                listFood: ''
+                listFood: '',
+                meals: ["selected","",""]
             };
             return data;
         }]);

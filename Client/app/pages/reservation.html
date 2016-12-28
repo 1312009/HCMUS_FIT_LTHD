@@ -32,7 +32,7 @@
                 </td>
                 <td id="TD_19">
 
-                    <input type="number" id="INPUT_20" ng-model='foodItem.count' ng-change="change1($storage.cp.indexOf(foodItem))"/> <a id="A_21" ng-click="remove($storage.cp.indexOf(foodItem))">Bỏ sản phẩm</a>
+                    <input type="number" id="INPUT_20" min="0" ng-model='foodItem.count' ng-change="change1($storage.cp.indexOf(foodItem))"/> <a id="A_21" ng-click="remove(foodItem.id)">Bỏ sản phẩm</a>
                 </td>
                 <td id="TD_22">
                     <span id="SPAN_23">{{foodItem.price * foodItem.count}}đ</span>
@@ -48,6 +48,6 @@
                 <span id="SPAN_500">{{sum()}}đ</span>
             </div>
         </div>
-        <a href="index_payment.html" id="A_1m">Thanh toán</a>
+        <a ui-sref="payment" id="A_1m">Thanh toán</a>
     </div>
 </div>

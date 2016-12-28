@@ -17,7 +17,8 @@ define(function (require) {
         'services',
         'ui.router',
         'angular-storage',
-        'ngMap'
+        'ngMap',
+        'ui-notification'
     ]);
 
     app.init = function () {
@@ -61,7 +62,18 @@ define(function (require) {
                 .state("admin", {
                     url: '/admin',
                     templateUrl: "/pages/admin.html",
-                    controller: "admin"
+                    controller: "admin",
+                    data: {
+                        requiresLogin: true
+                    }
+                })
+                .state("payment", {
+                    url: '/payment',
+                    templateUrl: "/pages/payment.html",
+                    controller: "payment",
+                    data: {
+                        requiresLogin: true
+                    }
                 })
                 .state('get_token', {
                     url: '/access_token=:accessToken',
@@ -81,6 +93,17 @@ define(function (require) {
             }
 
         };
+    });
+
+    app.run(function($rootScope, $state, store) {
+        $rootScope.$on('$stateChangeStart', function(e, to) {
+            if (to.data && to.data.requiresLogin) {
+                if (!store.get('jwt')) {
+                    e.preventDefault();
+                    $state.go('login');
+                }
+            }
+        });
     });
 
     return app;
