@@ -127,6 +127,10 @@ define(function (require) {
             $scope.changeCurrentMenu(id);
         });
 
+        $rootScope.$on("updateLogin", function(event, id){
+            $scope.isLogin = true;
+            $scope.user = store.get('jwt').dbUser;
+        });
     });
 
     return social;

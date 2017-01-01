@@ -2,7 +2,7 @@
  * Created by ThaiSon on 26/11/2016.
  */
 
-define(function (require) {
+define(['require', './directives/main', './controllers/main', './services/main'],function (require) {
 
     'use strict';
 
@@ -43,6 +43,11 @@ define(function (require) {
                     url: '/login',
                     templateUrl: "/pages/login.html",
                     controller: "emailLogin"
+                })
+                .state("register", {
+                    url: '/register',
+                    templateUrl: "/pages/register.html",
+                    controller: "register"
                 })
                 .state("menu", {
                     url: '/menu',

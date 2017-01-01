@@ -7,7 +7,7 @@ define(function (require) {
 
     var email = angular.module('emailLogin', []);
 
-    email.controller('emailLogin', function ($http, store, $scope, $state) {
+    email.controller('emailLogin', function ($http, store, $scope, $state, $rootScope) {
         $scope.user = {};
         $scope.login = function () {
             $http({
@@ -17,11 +17,15 @@ define(function (require) {
             }).then(function successCallback(response) {
                 store.set('jwt', response.data);
                 console.log(response);
-                if(response.data.dbUser.name == "1312009")
+                if(response.data.dbUser.name == "1312009") {
+                    $rootScope.$emit("updateLogin", {});
                     $state.go("admin");
-                else
-                    window.location.replace('http://localhost:3000');
-                // $state.go("/");
+                }
+                else {
+                    $rootScope.$emit("updateLogin", {});
+                    $state.go("/");
+                }
+
             }, function errorCallback(response) {
                 console.log(response);
                 console.log($scope.user);

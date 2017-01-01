@@ -178,13 +178,10 @@ define(function (require) {
             {
                 case 1:
                     return "Sáng";
-                break;
                 case 2:
                     return "Trưa";
-                break;
                 case 3:
                     return "Tối";
-                break;
             }
         };
 

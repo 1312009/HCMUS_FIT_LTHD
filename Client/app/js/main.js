@@ -11,7 +11,7 @@ require.config({
             exports: "angular"
         }
     },
-    baseUrl: '/js'
+    baseUrl: './js'
 
 });
 

@@ -2,7 +2,10 @@
  * Created by ThaiSon on 26/11/2016.
  */
 
-define(function (require) {
+define(['require',
+    './myHeader/myHeader',
+    './myFooter/myFooter'], function (require) {
+
     "use strict";
 
     var header = require('./myHeader/myHeader');

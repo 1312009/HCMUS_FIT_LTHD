@@ -2,7 +2,9 @@
  * Created by ThaiSon on 06/12/2016.
  */
 
-define(function (require) {
+define(['require',
+    './sharedData'], function (require) {
+
     "use strict";
 
     var sharedDT = require('./sharedData');
