@@ -27,7 +27,7 @@ define(function (require) {
             if($scope.nameOfBtn == "Chỉnh sửa món ăn") {
                 $http({
                     method: 'PUT',
-                    url: 'http://localhost:59219/api/Admin/EditFood',
+                    url: sharedData.host + '/api/Admin/EditFood',
                     headers: {
                         Authorization: $scope.jwt.token
                     },
@@ -67,7 +67,7 @@ define(function (require) {
                 {
                     $http({
                         method: 'POST',
-                        url: 'http://localhost:59219/api/Admin/AddFood',
+                        url: sharedData.host + '/api/Admin/AddFood',
                         headers: {
                             Authorization: $scope.jwt.token
                         },
@@ -118,7 +118,7 @@ define(function (require) {
         $scope.removeFood = function(food){
             $http({
                 method: 'DELETE',
-                url: 'http://localhost:59219/api/Admin/DeleteFood',
+                url: sharedData.host + '/api/Admin/DeleteFood',
                 headers: {
                     Authorization: $scope.jwt.token
                 },
@@ -136,7 +136,7 @@ define(function (require) {
 
         function addItem() {
             $http({
-                url: "http://localhost:59219/api/foods/GetAllFoods",
+                url: sharedData.host + "/api/foods/GetAllFoods",
                 method: 'GET',
             }).then(function successCallback(response) {
                 sharedData.listFood = response.data;

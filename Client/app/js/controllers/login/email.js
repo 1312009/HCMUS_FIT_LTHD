@@ -7,12 +7,12 @@ define(function (require) {
 
     var email = angular.module('emailLogin', []);
 
-    email.controller('emailLogin', function ($http, store, $scope, $state, $rootScope) {
+    email.controller('emailLogin', function ($http, store, $scope, $state, $rootScope, sharedData) {
         $scope.user = {};
         $scope.login = function () {
             $http({
                 method: 'POST',
-                url: 'http://localhost:59219/api/Account/signin',
+                url: sharedData.host + '/api/Account/signin',
                 data: $scope.user
             }).then(function successCallback(response) {
                 store.set('jwt', response.data);

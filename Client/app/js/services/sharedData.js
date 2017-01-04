@@ -11,7 +11,9 @@ define(function (require) {
         function(){
             var data = {
                 listFood: '',
-                meals: ["selected","",""]
+                meals: ["selected","",""],
+                host: "http://localhost:59219",
+                domain: "http://localhost:3000"
             };
             return data;
         }]);
