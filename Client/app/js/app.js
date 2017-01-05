@@ -84,6 +84,18 @@ define(['require', './directives/main', './controllers/main', './services/main']
                     url: '/access_token=:accessToken',
                     template: '',
                     controller: "getToken"
+                })
+                .state('reset', {
+                    url: '/reset',
+                    template: '',
+                    controller: function(store, $state){
+                        store.remove('social');
+                        store.remove('accessToken');
+                        store.remove('jwt');
+                        store.remove('cart');
+                        $state.go("/");
+                        window.location.reload();
+                    }
                 });
 
         }]);

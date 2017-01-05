@@ -23,7 +23,7 @@ define(function (require) {
                 method: 'GET',
             }).then(function(response) {
                 sharedData.listFood = response.data;
-                console.log(sharedData.listFood);
+                $rootScope.$emit("getFoods", {});
             }, function(error) {
                 console.log(error);
             });

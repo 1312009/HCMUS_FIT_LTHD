@@ -8,9 +8,12 @@ define(function (require) {
     var admin = angular.module('admin', []);
 
     admin.controller('admin', function ($http, $scope, store, sharedData, $timeout) {
-        $timeout(function () {
+
+        $scope.listFood = sharedData.listFood;
+
+        $rootScope.$on("getFoods", function(){
             $scope.listFood = sharedData.listFood;
-        }, 250);
+        });
 
         $scope.nameOfBtn = "Thêm món ăn";
         $scope.foodName = "";

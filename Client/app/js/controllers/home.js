@@ -9,9 +9,11 @@ define(function (require) {
 
     home.controller('home', function ($state, $scope, store, sharedData, $timeout, $rootScope, Notification) {
 
-        $timeout(function () {
+        $scope.listFood = sharedData.listFood;
+
+        $rootScope.$on("getFoods", function(){
             $scope.listFood = sharedData.listFood;
-        }, 250);
+        });
 
         var meals = ["","",""];
         $scope.gotoMenu = function (id) {

@@ -9,9 +9,11 @@ define(function (require) {
 
     menu.controller('menu', function ($http, $scope, store, sharedData, $rootScope, $timeout, Notification) {
 
-        $timeout(function () {
+        $scope.listFood = sharedData.listFood;
+
+        $rootScope.$on("getFoods", function(){
             $scope.listFood = sharedData.listFood;
-        }, 250);
+        });
 
         $scope.cart = [];
         $scope.count = 0;
