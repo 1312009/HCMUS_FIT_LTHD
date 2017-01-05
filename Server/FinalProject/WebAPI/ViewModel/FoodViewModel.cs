@@ -13,6 +13,11 @@ namespace WebAPI.ViewModel
     {
         public string iduser { get; set; }
         public List<Oders> listoders { get; set; }
+        public string Username { get; set; }
+        public string Phone { get; set; }
+        public string District { get; set; }
+        public string Ward { get; set; }
+        public string Address { get; set; }
     }
     public class Oders
     {

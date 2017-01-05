@@ -9,6 +9,7 @@ using WebAPI.Data;
 using Twilio;
 using System.Configuration;
 using System.Net.Mail;
+using WebAPI.ViewModel;
 
 namespace WebAPI.Controllers
 {
@@ -112,22 +113,6 @@ namespace WebAPI.Controllers
             db.Entry(food).State = EntityState.Modified;
             db.SaveChanges();
             return true;
-        }
-        [Route("F")]
-        [HttpGet]
-        public void SendSMS(string Phone)
-        {
-            try
-            {
-                string AccountSid = ConfigurationManager.AppSettings.Get("Account_id"); ;
-                string AuthToken = ConfigurationManager.AppSettings.Get("Auth_token"); ;
-                var twilio = new TwilioRestClient(AccountSid, AuthToken);
-                var sms = twilio.SendSmsMessage("(201) 546-9880", "+"+Phone, "hj SMS", "");
-
-            }
-            catch (Exception ex)
-            { 
-            }
         }
     }
 }
