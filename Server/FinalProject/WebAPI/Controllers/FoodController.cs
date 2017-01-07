@@ -46,12 +46,12 @@ namespace WebAPI.Controllers
             }
             try
             {
-                SendSMS(message.Phone, message.Message);
                 MailMessage mailMessag = new MailMessage(ConfigurationManager.AppSettings.Get("Email"), message.Email);
-                mailMessag.Subject = "Gửi thông tin";
+                mailMessag.Subject = "Gửi thông tin thành công. Sau đây là nội dung tin nhắn của bạn: ";
                 mailMessag.Body = message.Message;
                 SmtpClient client = new SmtpClient();
                 client.Send(mailMessag);
+                SendSMS("+84981103589", "Có người tên "+message.Username+" góp ý với nội dung như sau: " + message.Message);
                 return true;
             }
             catch (Exception ex)
