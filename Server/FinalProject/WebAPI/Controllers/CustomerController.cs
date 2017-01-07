@@ -14,32 +14,7 @@ namespace WebAPI.Controllers
     [RoutePrefix("api/Customer")]
     public class CustomerController : ApiController
     {
-        public FOODEntities db = new FOODEntities();
-        [Route("SendMessage")]
-        [HttpPost]
-        public bool SendMessage(MessageViewModel message)
-        {
-            if (!ModelState.IsValid)
-            {
-                return false;
-            }
-            try
-            {
-                SendSMS(message.Phone, message.Message);
-                MailMessage mailMessag = new MailMessage(ConfigurationManager.AppSettings.Get("Email"), message.Email);
-                mailMessag.Subject = "Gửi thông tin";
-                mailMessag.Body = message.Message;
-                SmtpClient client = new SmtpClient();
-                client.Send(mailMessag);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-
-        }
-       
+        public FOODEntities db = new FOODEntities();  
         public void SendSMS(string Phone, string message)
         {
             try

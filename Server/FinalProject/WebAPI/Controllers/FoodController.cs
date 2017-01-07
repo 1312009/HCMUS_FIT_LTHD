@@ -6,13 +6,60 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using WebAPI.Data;
+using System.Web.Http;
+using WebAPI.ViewModel;
+using System.Net.Mail;
+using System.Configuration;
+using System.Data.Entity;
+using Twilio;
+
+
 namespace WebAPI.Controllers
 {
     [RoutePrefix("api/foods")]
     public class FOODController : ApiController
     {
         public FOODEntities db = new FOODEntities();
+        public void SendSMS(string Phone, string message)
+        {
+            try
+            {
+                string AccountSid = ConfigurationManager.AppSettings.Get("Account_id"); ;
+                string AuthToken = ConfigurationManager.AppSettings.Get("Auth_token"); ;
+                var twilio = new TwilioRestClient(AccountSid, AuthToken);
+                var sms = twilio.SendSmsMessage("(201) 546-9880", "+" + Phone, message, "");
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        [Route("SendMessage")]
+        [HttpPost]
+        public bool SendMessage(MessageViewModel message)
+        {
+            if (!ModelState.IsValid)
+            {
+                return false;
+            }
+            try
+            {
+                SendSMS(message.Phone, message.Message);
+                MailMessage mailMessag = new MailMessage(ConfigurationManager.AppSettings.Get("Email"), message.Email);
+                mailMessag.Subject = "Gửi thông tin";
+                mailMessag.Body = message.Message;
+                SmtpClient client = new SmtpClient();
+                client.Send(mailMessag);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
         /// <summary>
         /// Lấy danh sách thức ăn
         /// </summary>
