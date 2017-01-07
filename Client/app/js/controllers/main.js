@@ -3,31 +3,46 @@
  */
 
 define(['require',
-    './login/social',
+    './account/social',
     './home',
     './menu',
     './reservation',
     './contact',
-    './login/email',
-    './login/register',
+    './account/email',
+    './account/register',
+    './account/forgetPass',
+    './account/changePass',
     './admin',
     './payment',
-    './login/getToken'], function (require) {
+    './account/getToken'], function (require) {
 
     "use strict";
 
-    var social = require('./login/social');
+    var social = require('./account/social');
     var home = require('./home');
     var menu = require('./menu');
     var reservation = require('./reservation');
     var contact = require('./contact');
-    var email = require('./login/email');
-    var register = require('./login/register');
+    var email = require('./account/email');
+    var register = require('./account/register');
+    var forgetPass = require('./account/forgetPass');
+    var changePass = require('./account/changePass');
     var admin = require('./admin');
     var payment = require('./payment');
-    var getToken = require('./login/getToken');
+    var getToken = require('./account/getToken');
 
-    var controllers = angular.module('controllers',['socialLogin','home','emailLogin','getToken','menu','reservation','contact','admin','payment','register']);
+    var controllers = angular.module('controllers',['socialLogin',
+                                                    'home',
+                                                    'emailLogin',
+                                                    'getToken',
+                                                    'menu','reservation',
+                                                    'contact',
+                                                    'admin',
+                                                    'payment',
+                                                    'register',
+                                                    'forgetPass',
+                                                    'changePass']
+    );
 
     return controllers;
 });

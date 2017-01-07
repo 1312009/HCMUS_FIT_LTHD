@@ -12,6 +12,7 @@ define(function (require) {
             var data = {
                 listFood: '',
                 meals: ["selected","",""],
+                forgetPass: false,
                 host: "http://localhost:59219",
                 domain: "http://localhost:3000"
             };

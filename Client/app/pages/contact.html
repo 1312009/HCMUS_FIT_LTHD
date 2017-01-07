@@ -29,31 +29,24 @@
                     <div class="success-message">Contact form submitted</div>
                 </div>
                 <label class="name">
-                    <input type="text" placeholder="Tên:" data-constraints="@Required @JustLetters" />
-                    <span class="empty-message">*This field is required.</span>
-                    <span class="error-message">*This is not a valid name.</span>
+                    <input type="text" placeholder="Tên" ng-model="name"/>
                 </label>
 
                 <label class="email">
-                    <input type="text" placeholder="E-mail:" data-constraints="@Required @Email" />
-                    <span class="empty-message">*This field is required.</span>
-                    <span class="error-message">*This is not a valid email.</span>
+                    <input type="text" placeholder="E-mail" ng-model="email"/>
+
                 </label>
                 <label class="phone">
-                    <input type="text" placeholder="Điện Thoại:" data-constraints="@Required @JustNumbers"/>
-                    <span class="empty-message">*This field is required.</span>
-                    <span class="error-message">*This is not a valid phone.</span>
+                    <input type="text" placeholder="Điện Thoại" ng-model="phone"/>
                 </label>
                 <label class="message">
-                    <textarea placeholder="Tin nhắn:" data-constraints='@Required @Length(min=20,max=999999)'></textarea>
-                    <span class="empty-message">*This field is required.</span>
-                    <span class="error-message">*The message is too short.</span>
+                    <textarea placeholder="Tin nhắn" ng-model="message"></textarea>
                 </label>
                 <div>
                     <div class="clear"></div>
                     <div class="btns">
-                        <a href="#" data-type="reset" class="btn">Xoá</a>
-                        <a href="#" data-type="submit" class="btn">Gởi</a></div>
+                        <a href="" data-type="reset" class="btn">Xoá</a>
+                        <a href="" data-type="submit" class="btn" ng-click="send()">Gởi</a></div>
                 </div>
             </form>
         </div>

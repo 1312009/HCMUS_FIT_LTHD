@@ -7,12 +7,39 @@ define(function (require) {
 
     var contact = angular.module('contact', []);
 
-    contact.controller('contact', function (NgMap, $scope, store, sharedData) {
+    contact.controller('contact', function (NgMap, $scope, store, sharedData, $http) {
         NgMap.getMap().then(function(map) {
-            console.log(map.getCenter());
-            console.log('markers', map.markers);
-            console.log('shapes', map.shapes);
         });
+
+        $scope.name = "";
+        $scope.phone = "";
+        $scope.email = "";
+        $scope.message = "";
+
+        $scope.send = function () {
+          if($scope.name !== "" &&
+            $scope.phone !== "" &&
+            $scope.email !== "" &&
+            $scope.message !== "")
+              {
+                  $http({
+                      method: 'POST',
+                      url: sharedData.host + '/api/Customer/SendMessage',
+                      data: {
+                          Username: $scope.name,
+                          Message: $scope.message,
+                          Phone: $scope.phone,
+                          Email: $scope.email
+
+                      }
+                  }).then(function successCallback(response) {
+
+                      console.log(response);
+                  }, function errorCallback(response) {
+                      console.log(response);
+                  });
+              }
+        };
     });
 
     return contact;

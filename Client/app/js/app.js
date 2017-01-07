@@ -85,6 +85,16 @@ define(['require', './directives/main', './controllers/main', './services/main']
                     template: '',
                     controller: "getToken"
                 })
+                .state('forget', {
+                    url: '/forget',
+                    templateUrl: '/pages/forgetPass.html',
+                    controller: "forgetPass"
+                })
+                .state('change', {
+                    url: '/change',
+                    templateUrl: '/pages/changePass.html',
+                    controller: "changePass"
+                })
                 .state('reset', {
                     url: '/reset',
                     template: '',

@@ -9,6 +9,7 @@ define(function (require) {
 
     email.controller('emailLogin', function ($http, store, $scope, $state, $rootScope, sharedData) {
         $scope.user = {};
+        $scope.forgetPass = sharedData.forgetPass;
         $scope.login = function () {
             $http({
                 method: 'POST',
