@@ -8,12 +8,20 @@
         <div class="tabs tb gallery">
             <div class="div-nav  ">
                 <div class="grid_12">
-                    <ul class="nav">
+                    <ul class="nav" ng-if = "listFood !== ''">
                         <li ng-class="meals[0]"><a ng-click="changeMeals(1)" class="">Điểm tâm</a></li>
 
                         <li ng-class="meals[1]"><a ng-click="changeMeals(2)">Cơm trưa</a></li>
 
                         <li ng-class="meals[2]"><a ng-click="changeMeals(3)">Cơm tối</a></li>
+
+                    </ul>
+                    <ul class="nav" ng-if = "listFood == ''">
+                        <!--<li ng-class="meals[0]"><a ng-click="changeMeals(1)" class="">Điểm tâm</a></li>-->
+
+                        <li class="selected"><a >Loading...</a></li>
+
+                        <!--<li ng-class="meals[2]"><a ng-click="changeMeals(3)">Cơm tối</a></li>-->
 
                     </ul>
                 </div>

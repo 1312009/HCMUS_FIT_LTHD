@@ -21,7 +21,7 @@
         </div>
 
         <div class="grid_3">
-            <div class="box maxheight">
+            <div class="box maxheight" ng-if = "listFood !== ''">
                 <img src="{{listFood[0].imgfood}}" alt="" height="189" width="189">
                 <div class="title" id="ft">{{listFood[0].name}}</div>
                 <p id="detail">
@@ -31,10 +31,19 @@
                 <br>
                 <a href="" ng-click="success(0)">Đặt món</a>
             </div>
+            <div class="box maxheight" ng-if = "listFood == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
         </div>
 
         <div class="grid_3">
-            <div class="box maxheight">
+            <div class="box maxheight" ng-if = "listFood !== ''">
                 <img src="{{listFood[1].imgfood}}" alt="" height="189" width="189">
                 <div class="title" id="ft">{{listFood[1].name}}</div>
                 <p id="detail">
@@ -44,9 +53,18 @@
                 <br>
                 <a href="" ng-click="success(1)">Đặt món</a>
             </div>
+            <div class="box maxheight" ng-if = "listFood == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
         </div>
         <div class="grid_3">
-            <div class="box maxheight">
+            <div class="box maxheight" ng-if = "listFood !== ''">
                 <img src="{{listFood[2].imgfood}}" alt="" height="189" width="189">
                 <div class="title" id="ft">{{listFood[2].name}}</div>
                 <p id="detail">
@@ -56,9 +74,18 @@
                 <br>
                 <a href="" ng-click="success(2)">Đặt món</a>
             </div>
+            <div class="box maxheight" ng-if = "listFood == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
         </div>
         <div class="grid_3">
-            <div class="box maxheight">
+            <div class="box maxheight" ng-if = "listFood !== ''">
                 <img src="{{listFood[3].imgfood}}" alt="" height="189" width="189">
                 <div class="title" id="ft">{{listFood[3].name}}</div>
                 <p id="detail">
@@ -67,6 +94,15 @@
                 <a style="margin-bottom: -20px; color: red;">{{listFood[3].price}}đ</a>
                 <br>
                 <a href="" ng-click="success(3)">Đặt món</a>
+            </div>
+            <div class="box maxheight" ng-if = "listFood == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
             </div>
         </div>
     </div>
