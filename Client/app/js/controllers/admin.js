@@ -7,7 +7,7 @@ define(function (require) {
 
     var admin = angular.module('admin', []);
 
-    admin.controller('admin', function ($http, $scope, store, sharedData, $timeout) {
+    admin.controller('admin', function ($http, $scope, store, sharedData, $timeout, $rootScope) {
 
         $scope.listFood = sharedData.listFood;
 

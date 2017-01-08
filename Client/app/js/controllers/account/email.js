@@ -7,7 +7,7 @@ define(function (require) {
 
     var email = angular.module('emailLogin', []);
 
-    email.controller('emailLogin', function ($http, store, $scope, $state, $rootScope, sharedData) {
+    email.controller('emailLogin', function ($http, store, $scope, $state, $rootScope, sharedData, Notification) {
         $scope.user = {};
         $scope.forgetPass = sharedData.forgetPass;
         $scope.login = function () {
@@ -28,8 +28,11 @@ define(function (require) {
                 }
 
             }, function errorCallback(response) {
+                if(response.status == 500)
+                {
+                    Notification.error({message: 'Đăng nhập sai!', delay: 1500});
+                }
                 console.log(response);
-                console.log($scope.user);
             });
         };
     });

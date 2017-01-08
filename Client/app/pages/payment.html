@@ -18,7 +18,7 @@
                     Điện thoại di động
                 </label>
                 <div id="DIV_11090">
-                    <input type="tel" name="telephone" id="INPUT_12090" placeholder="Nhập số điện thoại" />
+                    <input type="tel" name="telephone" id="INPUT_12090" placeholder="Nhập số điện thoại" ng-model="phone"/>
                 </div>
             </div>
             <div id="DIV_269090">
@@ -55,7 +55,7 @@
 
                     <!--                -->
 
-                    <select name="city_id" id="SELECT_342090">
+                    <select name="city_id" id="SELECT_342090" ng-model="district">
 
                         <option id="OPTION_343">
                             Chọn Quận/Huyện
@@ -163,7 +163,7 @@ Chọn Phường/Xã
                     Địa chỉ
                 </label>
                 <div id="DIV_355090">
-                    <textarea name="street" id="TEXTAREA_356090" placeholder="Ví dụ: 725, đường Lê Hồng Phong, Phường 12"></textarea>
+                    <textarea name="street" id="TEXTAREA_356090" placeholder="Ví dụ: 725, đường Lê Hồng Phong, Phường 12" ng-model="address"></textarea>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@
         </div>
         <div class="grid_8">
             <h3 class="head3">Mẫu liên hệ</h3>
-            <form id="form">
+            <form id="form" name="myForm">
 
                 <div class="success_wrapper">
                     <div class="success-message">Contact form submitted</div>
@@ -33,7 +33,7 @@
                 </label>
 
                 <label class="email">
-                    <input type="text" placeholder="E-mail" ng-model="email"/>
+                    <input type="email" name="input" placeholder="E-mail" ng-model="email"/>
 
                 </label>
                 <label class="phone">
@@ -46,7 +46,7 @@
                     <div class="clear"></div>
                     <div class="btns">
                         <a href="" data-type="reset" class="btn">Xoá</a>
-                        <a href="" data-type="submit" class="btn" ng-click="send()">Gởi</a></div>
+                        <a href="" class="btn" ng-click="send()">Gởi</a></div>
                 </div>
             </form>
         </div>

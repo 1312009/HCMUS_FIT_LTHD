@@ -9,9 +9,6 @@ define(function (require) {
 
     social.controller('socialLogin', function ($http, $scope, store, $rootScope, sharedData) {
 
-        store.remove('cart');
-        store.remove('count');
-        console.log("social");
         callApi('Secured', sharedData.host + '/api/foods/GetAllFoods');
 
 
@@ -89,6 +86,7 @@ define(function (require) {
             store.remove('accessToken');
             store.remove('jwt');
             store.remove('cart');
+            store.remove('count');
             window.location.reload();
         };
 

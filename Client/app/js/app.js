@@ -103,6 +103,7 @@ define(['require', './directives/main', './controllers/main', './services/main']
                         store.remove('accessToken');
                         store.remove('jwt');
                         store.remove('cart');
+                        store.remove('count');
                         $state.go("/");
                         window.location.reload();
                     }

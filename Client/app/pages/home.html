@@ -105,5 +105,96 @@
                 <a></a>
             </div>
         </div>
+
+        <!----------------------------------------------------->
+        <div class="grid_12">
+            <h3>Món ăn tham khảo</h3>
+        </div>
+
+        <div class="grid_3">
+            <div class="box maxheight" ng-if = "listRef !== ''">
+                <img src="{{listRef[0].imgfood}}" alt="" height="189" width="189">
+                <div class="title" id="ft">{{listRef[0].name}}</div>
+                <p id="detail" style="margin-top: 45px;">
+                    {{listRef[0].decription | lengthstring}}
+                </p>
+                <a style="margin-bottom: -20px; color: red;">{{listRef[0].price}}đ</a>
+                <br>
+
+            </div>
+            <div class="box maxheight" ng-if = "listRef == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
+        </div>
+
+        <div class="grid_3">
+            <div class="box maxheight" ng-if = "listRef !== ''">
+                <img src="{{listRef[1].imgfood}}" alt="" height="189" width="189">
+                <div class="title" id="ft">{{listRef[1].name}}</div>
+                <p id="detail" style="margin-top: 45px;">
+                    {{listRef[1].decription | lengthstring}}
+                </p>
+                <a style="margin-bottom: -20px; color: red;">{{listRef[1].price}}đ</a>
+                <br>
+
+            </div>
+            <div class="box maxheight" ng-if = "listRef == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
+        </div>
+        <div class="grid_3">
+            <div class="box maxheight" ng-if = "listRef !== ''">
+                <img src="{{listRef[2].imgfood}}" alt="" height="189" width="189">
+                <div class="title" id="ft">{{listRef[2].name}}</div>
+                <p id="detail" style="margin-top: 45px;">
+                    {{listRef[2].decription | lengthstring}}
+                </p>
+                <a style="margin-bottom: -20px; color: red;">{{listRef[2].price}}đ</a>
+                <br>
+
+            </div>
+            <div class="box maxheight" ng-if = "listRef == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
+        </div>
+        <div class="grid_3">
+            <div class="box maxheight" ng-if = "listRef !== ''">
+                <img src="{{listRef[3].imgfood}}" alt="" height="189" width="189">
+                <div class="title" id="ft">{{listRef[3].name}}</div>
+                <p id="detail" style="margin-top: 45px;">
+                    {{listRef[3].decription | lengthstring}}
+                </p>
+                <a style="margin-bottom: -20px; color: red;">{{listRef[3].price}}đ</a>
+                <br>
+
+            </div>
+            <div class="box maxheight" ng-if = "listRef == ''">
+                <div class="title" id="ft">Loading...</div>
+                <p id="detail">
+
+                </p>
+                <a style="margin-bottom: -20px; color: red;"></a>
+                <br>
+                <a></a>
+            </div>
+        </div>
     </div>
 </div>
