@@ -15,6 +15,7 @@ using System.Net.Mail;
 using System.Configuration;
 using System.Data.Entity;
 using Twilio;
+using HtmlAgilityPack;
 
 
 namespace WebAPI.Controllers
@@ -60,6 +61,68 @@ namespace WebAPI.Controllers
             }
 
         }
+        [Route("Ruttrichthongtin")]
+        [HttpGet]
+        public List<FOOD> RutTrichThongTin()
+        {
+            List<FOOD> Data = new List<FOOD>();
+            List<String> Href = new List<string>();
+
+            var webSite = new HtmlWeb();
+            var doc = webSite.Load("http://www.knorr.com.vn/recipes/canh/297426");
+            var metaTags = doc.DocumentNode.SelectNodes("//div[@class='c601 recipe-search-results']//div[@class='viewRecipeList']//a[@ct-type='recipeInfo']");
+            int dem = 0;
+            if (metaTags != null)
+            {
+                foreach (var tag in metaTags)
+                {
+                    if (dem % 2 == 0)
+                        if (tag.Attributes["href"] != null)
+                            Href.Add(@"http://www.knorr.com.vn" + tag.Attributes["href"].Value);
+                    dem++;
+                }
+            }
+
+            foreach (string href in Href)
+            {
+                FOOD MA = new FOOD();
+
+                HtmlWeb Web = new HtmlWeb();
+                HtmlDocument HtmlDoc = Web.Load(href);
+
+                // Hình ảnh
+                var HinhAnh = HtmlDoc.DocumentNode.SelectNodes("//div[@class='recipe-content-header']//div[@class='image']//img[@itemprop='image']");
+                if (HinhAnh != null)
+                {
+                    foreach (var tag in HinhAnh)
+                    {
+                        if (tag.Attributes["src"] != null)
+                            MA.IMGFOOD = tag.Attributes["src"].Value;
+                    }
+                }
+
+                // Món ăn
+                IEnumerable<HtmlNode> nodes = HtmlDoc.DocumentNode.SelectNodes("//div[@class='recipe-content-header']//h1[@itemprop='name']");
+                foreach (HtmlNode node in nodes)
+                {
+                    MA.NAME = node.InnerText;
+                }
+
+                // Nguyên liệu
+                nodes = HtmlDoc.DocumentNode.SelectNodes("//ul[@class='recipe-ingredients-list']//li[@itemprop='ingredients']");
+                string nl = "";
+                foreach (HtmlNode node in nodes)
+                {
+                    nl += node.InnerText + "\n";
+                }
+                MA.DECRIPTION = nl;
+                MA.ISSALE = 0;
+                MA.NUMBER = 0;
+                MA.PRICE = 3000;
+                Data.Add(MA);
+            }
+            return Data;
+        }
         /// <summary>
         /// Lấy danh sách thức ăn
         /// </summary>
@@ -68,7 +131,9 @@ namespace WebAPI.Controllers
         [HttpGet]
         public List<FOOD> GetFOODs()
         {
+            int t=0;
             var foods = from a in db.FOODs
+                        where a.ISSALE!=0
                         select a;
             return foods.ToList();
         }

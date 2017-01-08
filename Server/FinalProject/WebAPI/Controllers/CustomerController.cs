@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
             mailMessagCus.Body = mailMessagCus.Body + "Địa chỉ nhận đơn hàng : "+odersUser.Address+","+odersUser.Ward+","+odersUser.District;
             SmtpClient client = new SmtpClient();
             client.Send(mailMessagCus);
-            SendSMS(odersUser.Phone, mailMessagCus.Body);
+            SendSMS("+84981103589", mailMessagCus.Body);
 
             return true;
         }
